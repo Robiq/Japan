@@ -16,12 +16,15 @@
 #include <unistd.h> // read(), write()
 #include <stdlib.h>
 
+#define BUF_SIZE 100000
+#define FILENAME_SIZE 100
+
 int main()
 {
 	int sockfd, acceptfd; 
 	int len,count,i; 
-	char buf[100000];
-	char fileName[100];
+	char buf[BUF_SIZE];
+	char fileName[FILENAME_SIZE];
 	struct sockaddr_in server, client; 
 
 	FILE *in;
@@ -49,15 +52,15 @@ int main()
        	read(acceptfd, buf, sizeof(buf));
 	buf[strlen(buf)-2] = '\0';  //The buf has 2 abundant characters
 
-	/*process GET/<file name> command */
-	if(strncmp(buf,"GET/",4) == 0)   //Is the 4 first characters of the command is GET/?  
+	/*process GET /<file name> command */
+	if(strncmp(buf,"GET /",4) == 0)   //Is the 4 first characters of the command is GET /?  
 	  {
 	    for(i=4;i<strlen(buf);i++)
 	      {
 		fileName[count++] = buf[i];
 	      }
 	    fileName[count] = '\0';
-	    if(strlen(fileName) == 0) //If command is GET/ the "index.html" file will be sent
+	    if(strlen(fileName) == 0) //If command is GET / the "index.html" file will be sent
 	      strcpy(fileName,"index.html");
 	    in = fopen(fileName,"r");
 	    if(in == NULL){
