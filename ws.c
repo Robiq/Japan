@@ -13,12 +13,15 @@
 #include <unistd.h> // read(), write(), getcwd()
 #include <stdlib.h>
 #include <sys/stat.h> // stat struct and stat()
+#include <regex.h>
 
 #define BUF_SIZE 100000
 #define FILENAME_SIZE 100
 #define VERSION_SIZE 9
 #define PORT 7000
 #define PATH_SIZE 1024
+
+//ROBIN LUNDE 81625481
 
 int main()
 {
@@ -40,7 +43,7 @@ int main()
 	bind(sockfd, (struct sockaddr *)&server, sizeof(struct sockaddr_in));
     while(1){ //The server is always open
 		/* wait here until client tries to connect */
-		char* httpVer=malloc((size_t) VERSION_SIZE);
+		char* httpVer;
 		listen(sockfd, 5);
 		/* establish connection between a client host */
 		memset(&client, 0, sizeof(client)); 
@@ -51,27 +54,38 @@ int main()
 		buf[strlen(buf)-2] = '\0';  //The buf has 2 abundant characters
 		
 		/*process GET /<file name> command */
+		//Do regex lookup to make sure we have a correct HTTP-request
+		regex_t regex;
+		int ret;
+		ret=regcomp(&regex, "HTTP.*", 0);
+		if(ret){
+			printf("Critical server error on line 62\n");
+			exit(-1);
+		}
+		ret=regexec(&regex, buf, 0, NULL, 0);
+		//Not a correct format of string
+		if(ret){
+			write(acceptfd, "400 Bad Request\n", 17);
+			close(acceptfd);
+			continue;
+		}
 
 		//Is the 5 first characters of the command is GET /?  
 		if(strncmp(buf,"GET /",5) == 0) {
 
 
 
+		     //Store filename and HTTP version
 		    for(i=5;i<strlen(buf);i++)
 		      {
-		      	//Store filename and HTTP version
 		      	if(buf[i] == ' ')
 		      		break;
 				fileName[count++] = buf[i];
 		      }
 		    fileName[count] = '\0';
-		
-		    int j=i;
-		    for(j;j<strlen(buf);j++){
-				httpVer[j-i] = buf[j]; 	
-		    }
-		    httpVer[j+1] = '\0';
-
+			
+		    httpVer = &(buf[i]);
+	
 		     //If command is GET / the "index.html" file will be sent
 		    if(strlen(fileName) == 0)
 		      strcpy(fileName,"index.html");
@@ -80,7 +94,6 @@ int main()
 		    //Check if file exsist. If not, throw error.
 		  	//Get working directory
 			char* path = malloc((size_t) PATH_SIZE);
-
 		  	path = getcwd(path, PATH_SIZE);
 		  	
 		  	//Check if the file exists in the directory		    
@@ -91,7 +104,6 @@ int main()
 		    if(stat (path, &sb) == -1){
 		      write(acceptfd, httpVer+1, strlen(httpVer));
 		      write(acceptfd," 404 not found\n",16);
-		      //exit(0);
 		    
 			//If the command is GET/<file name> <file name> will be sent
 		    }else{               
@@ -115,24 +127,18 @@ int main()
 			//Find length of HTTP request
 			for(i=strlen(buf);i>=0;i--){
 				if(buf[i]==' ')	break;
-					httpVer[count++] = buf[i];
 			}
 
-			i++;
-			count=0;
-			//Store HTTP request for correct error message
-			for(i;i<strlen(buf);i++){
-				if(buf[i]==' ')	break;
-					httpVer[count++] = buf[i];
-			}
-			httpVer[count]='\0';
+			//Give address of HTTP request to pointer
+			httpVer=&(buf[++i]);
+
 			//Return error
 			write(acceptfd, httpVer, strlen(httpVer));
 			write(acceptfd, " 501 Not Implemented\n", 22);
 		} 
 		/*Close connection*/
 		close(acceptfd);
-		free(httpVer);
+		
 	}
 	close(sockfd); 
 }
