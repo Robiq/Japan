@@ -1,0 +1,31 @@
+<!doctype html>
+<head>
+</head>
+<body>
+
+	<h1>TEST</h1>
+
+	<form action="findLongLat" method="POST">
+		<input id="LocLong" value="" type="hidden" />
+		<br>
+		<input id="LocLat" value="" type="hidden" />
+		<br>
+	</form>
+
+	<script>
+		// Try HTML5 geolocation.
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				document.getElementById.("LocLat").value = position.coords.latitude;
+				document.getElementById.("LocLong").value = position.coords.longitude;
+				document.getElementById("findLongLat").submit();
+			}
+		}
+		else{
+			alert("ERROR!")
+		}
+	</script>
+	<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFOR5KGBfesvpkW8hl633QaA2H-Q9bdaU">
+	</script>
+</body>

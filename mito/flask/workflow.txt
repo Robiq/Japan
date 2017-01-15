@@ -1,0 +1,36 @@
+Arrival page says:
+
+	Welcome to MiTo.
+
+	Please input your username.
+
+	Redirects to next part:
+
+	Thank you!
+
+	Please search for another user!
+
+	Redirects back with error: USER NOT FOUND!
+
+	OR
+	
+	P one:
+		redirect to waiting page
+		If p two declines: reditect to search-page
+
+	Pop-up P two:
+		Connection:
+			Let us access your location and connect to p one
+			
+			if no: redirect 1 and 2 back.
+
+	Start calculation, show information
+
+
+	Get cordinates from user.
+	Send to flask with JQUERY/JS
+	Render page with maps
+	Update with new cordinates every x seconds.
+	Add terminate button
+
+	Make available to anyone on site. Calculate from you to user and get live update.

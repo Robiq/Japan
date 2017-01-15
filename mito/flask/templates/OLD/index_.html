@@ -1,0 +1,43 @@
+<!doctype html>
+<head>
+	<style type="text/css" media="screen">
+
+	table{
+	border-collapse:collapse;
+	border:1px solid black;
+	}
+
+	table td, th{
+	border:1px solid black;
+	}
+	</style>
+
+	<title>ミト</title>
+	<h1>ミト</h1>
+</head>
+	<body>
+	<h2>Makes meeting up with friends easy!</h2>
+
+
+	{% if error %}
+
+	<h3>Username taken! Please choose another username:</h3>
+		<form action="Store_User" method="POST">
+		    Desired username:
+		    <br>
+		    <input type="text" name="Username">
+		    <br>
+		    <input type="submit" value="Submit">
+		</form>
+
+	{% else %}
+		<h3>Please choose a username:</h3>
+		<form action="Store_User" method="POST">
+		    Desired username:
+		    <br>
+		    <input type="text" name="Username">
+		    <br>
+		    <input type="submit" value="Submit">
+		</form>
+	{% endif %}
+	</body>
