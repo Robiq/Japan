@@ -114,7 +114,9 @@ def Find_User_form(error=None):
 		#PRINT nr 2 - needs correct formatting! send lat and lon as separate objects!!!
 		loc1 = locs[0]
 		loc2 = locs[1]
-		#return TODO Can't send in pure location data
+		print(loc1);
+		print(loc2)
+		#return
 		return render_template('/meet.html', startLat=loc1[0], startLon=loc1[1], endLat=loc2[0], endLon=loc2[1])
 
 	else:
@@ -147,8 +149,6 @@ def Store_User(error=None):
 	lon = request.form["lon"]
 	lat = request.form["lat"]
 	pos = request.form["pos"]
-	print(lon)
-	print("\n" + lat + "\n")
 	usr.addCords(lon, lat, pos)
 
 	#render
@@ -162,4 +162,4 @@ if __name__ == '__main__':
 	"""
 	
 	#start
-	app.run(host='0.0.0.0', port=80)
+	app.run()
