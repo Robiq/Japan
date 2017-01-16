@@ -1,6 +1,3 @@
-import requests
-import geocoder
-
 class User:
 	userCount = 0
 
