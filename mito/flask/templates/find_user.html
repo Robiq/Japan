@@ -1,17 +1,5 @@
 <!doctype html>
 <head>
-
-	<script type="text/javascript">
-		if(navigator.geolocation){
-			navigator.geolocation.getCurrentPosition(showPosition);
-		}
-		
-		function showPosition(position) {
-            document.getElementById("lon").setAttribute("value", position.coords.longitude);
-            document.getElementById("lat").setAttribute("value", position.coords.latitude);
-		}
-	</script>
-
 	<style type="text/css" media="screen">
 
 	table{
@@ -50,8 +38,6 @@
 		    <br>
 		    <input type="text" name="cur_User" value="{{ name }}" readonly>
 		    <br>
-		    <input type="hidden" id="lon" name="lon" />
-			<input type="hidden" id="lat" name="lat"/>
 		    <input type="submit" value="Search">
 		</form>
 	</body>

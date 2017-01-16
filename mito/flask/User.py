@@ -10,10 +10,11 @@ class User:
 	def addPairing(self, Pairing):
 		self.paired = Pairing
 
-	def addCords(self, lon, lat):
-		self.coords{}
-		coords['lat'] = lat
-		coords['lon'] = lon
+	def addCords(self, lon, lat, pos):
+		self.coords = []
+		self.coords.append(lon)
+		self.coords.append(lat)
+		self.pos = pos
 
 	def getCords(self):
 		return self.coords

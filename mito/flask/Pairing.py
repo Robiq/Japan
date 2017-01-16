@@ -1,16 +1,27 @@
 class Pairing:
 	pairs = 0
 
-	def contains(username):
-		return user1.isEqual(username) or user2.isEqual(username)
+	def hasUser(self, username):
+		return (self.user1.isEqual(username) or self.user2.isEqual(username))
 
 	def addCords(self):
 		self.user1.addCords()
 		self.user2.addCords()
 
-	def meetingPoint(self):
-		u1C=self.user1.getCords()
-		u2C=self.user2.getCords()
+	def getLoc(self, uname):
+		u1C = None
+		u2C = None
+		if self.user1.isEqual(uname):
+			u1C=self.user1.getCords()
+			u2C=self.user2.getCords()
+		else:
+			u1C=self.user2.getCords()
+			u2C=self.user1.getCords()
+			
+		loc=[]
+		loc.append(u1C)
+		loc.append(u2C)
+		return loc
 
 	def __init__(self, user1, user2):
 		self.user1 = user1

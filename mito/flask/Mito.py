@@ -41,6 +41,25 @@ def addPair(user1, user2):
 	pairs.append(pair)
 	return pair
 
+def setUpMeeting(pair, user):
+	#Double check pairing
+	name = user.username
+	if not (pair.hasUser(name)):
+		return redirect("/", "Fatal error - user not a part of pair!")
+	
+	#TODO
+	return pair.getLoc(name)
+
+	#show map and points
+	#google map API functions
+
+
+	#Find median
+	#pair.metingPoint()
+	
+	#Show route to median and ETA
+	#Show other person and their ETA
+
 @app.route("/")
 def renderBase(error=None):
 	"""
@@ -48,8 +67,8 @@ def renderBase(error=None):
 	"""
 	return render_template('index.html', error=error)
 
-@app.route("/meet")
-def meet(pair, person, error=None):
+#@app.route("/meet")
+#def meet(pair, person, error=None):
 	"""
 	Renders the page for the actual functionality. 
 
@@ -60,38 +79,11 @@ def meet(pair, person, error=None):
 	Raises:
 		None
 	"""
-
-	#Double check pairing
-	if not pair.contains(person):
-		return redirect("/", "Fatal error - user not a part of pair!")
-	
-	#TODO
-	#Find individual cordinates
-	pair.addCords()
-	
-	#show map and points
-	#google map API functions
-
-
-	#Find median
-	#pair.mettingPoint()
-	
-	#Show route to median and ETA
-	#Show other person and their ETA
-	#Automatically close connection when finished!!!
-
-@app.route("/locInfo", methods=['POST'])
-def locInfo():
-	assert request.method == 'POST'
-	#Get input from form
-	#
-	lat = request.form["lat"]
-	lon = request.form["lon"]
-
-	print(lat)
-	print(lon)
-
-	return render_template('/tmp.html')
+	#Sleep
+#	sleep(10)
+	#Call getLoc for person
+	#After handling getLoc for person,
+	#rerender meet with new info
 
 @app.route("/Find_User_form", methods=['POST'])
 def Find_User_form(error=None):
@@ -108,30 +100,22 @@ def Find_User_form(error=None):
 	userInput = request.form["find_User"]
 	curUser = request.form["cur_User"]
 
-	print(User.userCount)
 	partner = findUser(userInput)
 	curUserObj = findUser(curUser)
-	
-	#Inaccurate
-	#ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-	#print("ip main " + ip )
-	#curUserObj.addCords(ip)
 
-	lat = request.form["lat"]
-	lon = request.form["lon"]
-
-	print(lat)
-	print(lon)
 
 	if partner != None:
 		pairnr = pairExists(curUserObj, partner)
 		if pairnr == -1:
 			#Found user, create pairing!
 			pairnr = addPair(curUserObj, partner)
-		#return 
-		return render_template('/tmp.html')
-		#return render_template('/geoLoc.html')
-		#return render_template('/meet.html', pair=pairnr, person=curUser)
+		
+		locs = setUpMeeting(pairnr, curUserObj)
+		#PRINT nr 2 - needs correct formatting! send lat and lon as separate objects!!!
+		loc1 = locs[0]
+		loc2 = locs[1]
+		#return TODO Can't send in pure location data
+		return render_template('/meet.html', startLat=loc1[0], startLon=loc1[1], endLat=loc2[0], endLon=loc2[1])
 
 	else:
 		#User not found, return to last page
@@ -160,6 +144,12 @@ def Store_User(error=None):
 
 	usr = User(userInput)
 	users.append(usr)
+	lon = request.form["lon"]
+	lat = request.form["lat"]
+	pos = request.form["pos"]
+	print(lon)
+	print("\n" + lat + "\n")
+	usr.addCords(lon, lat, pos)
 
 	#render
 
