@@ -44,7 +44,7 @@ def addPair(user1, user2):
 def setUpMeeting(pair, user):
 	#Double check pairing
 	name = user.username
-	if not (pair.hasUser(name)):
+	if not (pairs[pair].hasUser(name)):
 		return redirect("/", "Fatal error - user not a part of pair!")
 	
 	#TODO
