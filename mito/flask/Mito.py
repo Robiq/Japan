@@ -44,11 +44,11 @@ def addPair(user1, user2):
 def setUpMeeting(pair, user):
 	#Double check pairing
 	name = user.username
-	if not (pair.hasUser(name)):
+	if not (pairs[pair].hasUser(name)):
 		return redirect("/", "Fatal error - user not a part of pair!")
 	
 	#TODO
-	return pair.getLoc(name)
+	return pairs[pair].getLoc(name)
 
 	#show map and points
 	#google map API functions
