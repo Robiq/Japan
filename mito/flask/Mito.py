@@ -39,12 +39,12 @@ def addPair(user1, user2):
 	"""
 	pair = Pairing(user1, user2)
 	pairs.append(pair)
-	return pair
+	return pairs.index(user1.paired)
 
 def setUpMeeting(pair, user):
 	#Double check pairing
 	name = user.username
-	if not (pairs[pair].hasUser(name)):
+	if not (pair.hasUser(name)):
 		return redirect("/", "Fatal error - user not a part of pair!")
 	
 	#TODO
@@ -105,17 +105,15 @@ def Find_User_form(error=None):
 
 
 	if partner != None:
-		pairnr = pairExists(curUserObj, partner)
-		if pairnr == -1:
+		pair = pairExists(curUserObj, partner)
+		if pair == -1:
 			#Found user, create pairing!
-			pairnr = addPair(curUserObj, partner)
+			pair = addPair(curUserObj, partner)
 		
-		locs = setUpMeeting(pairnr, curUserObj)
+		locs = setUpMeeting(pair, curUserObj)
 		#PRINT nr 2 - needs correct formatting! send lat and lon as separate objects!!!
 		loc1 = locs[0]
 		loc2 = locs[1]
-		print(loc1);
-		print(loc2)
 		#return
 		return render_template('/meet.html', startLat=loc1[0], startLon=loc1[1], endLat=loc2[0], endLon=loc2[1])
 
