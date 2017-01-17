@@ -1,8 +1,6 @@
 import sqlite3 as sql
 import os
 from flask import *
-from User import *
-from Pairing import *
 
 app = Flask(__name__)
 app.config.from_object(__name__) # load config from this file , mito.py
@@ -47,51 +45,8 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
-#Find the correct user based on name
-def findUser(userName):
-	"""
-	Takes a username as argument
-
-	Returns None if not present, else returns User-object
-	"""
-	for u in users:
-		if u.isEqual(userName):
-			return u
-
-	return None
-
-def pairExists(user1, user2):
-	"""
-	Takes two user-objects as arguments
-
-	Returns true if they are in a pair already
-	"""
-	if user1.paired == user2.paired and user1.paired != None:
-		return pairs.index(user1.paired)
-	return -1
-
-def addPair(user1, user2):
-	"""
-	Takes two user-objects as arguments
-
-	Returns a new pair-object
-	"""
-	pair = Pairing(user1, user2)
-	pairs.append(pair)
-	return pairs.index(user1.paired)
-
-def setUpMeeting(pair, user):
-	#Double check pairing
-	name = user.username
-	if not (pairs[pair].hasUser(name)):
-		return redirect("/", "Fatal error - user not a part of pair!")
-	
-	#TODO
-	return pairs[pair].getLoc(name)
-
-	#show map and points
-	#google map API functions
-
+#TODO
+#def setUpMeeting(pair, user):
 
 	#Find median
 	#pair.metingPoint()
