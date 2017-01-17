@@ -45,14 +45,42 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
-#TODO
-#def setUpMeeting(pair, user):
+def isPair(user1, user2):
+	"""
+	Takes two user-objects as arguments
 
-	#Find median
-	#pair.metingPoint()
-	
-	#Show route to median and ETA
-	#Show other person and their ETA
+	Returns true if they are in a pair already
+	"""
+	db = get_db()
+	con = db.cursor()
+
+	partner = con.execute("SELECT name FROM users WHERE name=?", (user1)).fetchone()
+	curUserObj= con.execute("SELECT name FROM users WHERE name=?", (user2)).fetchone()
+
+	if partner and curUserObj:
+		p_pair = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (user1)).fetchone()
+		c_pair = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (user2)).fetchone()
+		
+		if c_pair != p_pair:
+			#Paired with someone else!
+			return -1
+			
+		else: 
+			#pair does not exist
+			if (not c_pair) and (not p_pair):
+				#Create pairing
+				con.execute("INSERT INTO pairs (name1, name2) VALUES (?, ?)", (user1,user2) )
+				db.commit()
+				pairNr = con.execute("SELECT id FROM pairs WHERE name1=? OR name2=?", (user2,user2)).fetchone()
+				con.execute("UPDATE users SET pair=? WHERE name=? or name=?", (pairNr[0],user1, user2) )
+				#con.execute("INSERT INTO users (pair) VALUES (?) WHERE name=?", (pairNr,user2) )
+				db.commit()
+				#con.execute("SELECT * FROM users")
+#				for x in con:
+#					print(x)
+				return 1
+	else:
+		return 0
 
 @app.route("/")
 def renderBase(error=None):
@@ -62,8 +90,8 @@ def renderBase(error=None):
 
 	return render_template('index.html', error=error)
 
-#@app.route("/meet")
-#def meet(pair, person, error=None):
+@app.route("/meet", methods=['POST'])
+def meet(error=None):
 	"""
 	Renders the page for the actual functionality. 
 
@@ -74,11 +102,30 @@ def renderBase(error=None):
 	Raises:
 		None
 	"""
+	assert request.method == 'POST'
+	#Get input from form
+	pairnum = request.form["pairnum"]
+	curUser = request.form["cur_User"]
+
 	#Sleep
-#	sleep(10)
-	#Call getLoc for person
-	#After handling getLoc for person,
-	#rerender meet with new info
+	sleep(10)
+
+	#TODO
+	#refresh coordinates!
+
+	db = get_db()
+	con = db.cursor()
+	
+	userInput = con.execute("SELECT name FROM users WHERE name NOT LIKE ? and pair=?", (curUser,pairnum)).fetchone()
+	locLat1, locLon1 = con.execute("SELECT locLat, locLon FROM users WHERE name=?", (curUser)).fetchone()
+	locLat2, locLon2 = con.execute("SELECT locLat, locLon FROM users WHERE name=?", (userInput)).fetchone()
+	if (locLat1 and locLon1 and locLat2 and locLon2):
+		#return
+		return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2, pair=pairnum, curUser=curUser)
+	else:
+		#ERROR!
+		error="Location data error"
+		return render_template('/find_user.html', error=error, name=curUser)
 
 @app.route("/Find_User_form", methods=['POST'])
 def Find_User_form(error=None):
@@ -91,55 +138,31 @@ def Find_User_form(error=None):
 	#Make sure the method used is post.
 	assert request.method == 'POST'
 	#Get input from form
-	#
 	userInput = request.form["find_User"]
 	curUser = request.form["cur_User"]
-
 	db = get_db()
 	con = db.cursor()
+	pair = isPair(userInput, curUser)
 
-	partner = con.execute("SELECT name FROM users WHERE name=?", (userInput)).fetchone()
-	curUserObj= con.execute("SELECT name FROM users WHERE name=?", (curUser)).fetchone()
-
-	if partner and curUserObj:
-		p_pair = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (userInput)).fetchone()
-		c_pair = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (curUser)).fetchone()
-		
-		if c_pair != p_pair:
-			#Paired with someone else!
-			#User not found, return to last page
-			error="User currently paired with someone else"
+	if pair == 1:
+		#pair exists
+		#get locs
+		pairnr = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (curUser)).fetchone()
+		locLat1, locLon1 = con.execute("SELECT locLat, locLon FROM users WHERE name=?", (curUser)).fetchone()
+		locLat2, locLon2 = con.execute("SELECT locLat, locLon FROM users WHERE name=?", (userInput)).fetchone()
+		if (locLat1 and locLon1 and locLat2 and locLon2):
+			#return
+			return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2, pair=pairnr, curUser=curUser)
+		else:
+			#ERROR!
+			error="Location data error"
 			return render_template('/find_user.html', error=error, name=curUser)
-		else: 
-			#pair does not exist
-			if (not c_pair) and (not p_pair):
-				#Create pairing
-				con.execute("INSERT INTO pairs (name1, name2) VALUES (?, ?)", (userInput,curUser) )
-				db.commit()
-				pairNr = con.execute("SELECT id FROM pairs WHERE name1=? OR name2=?", (curUser,curUser)).fetchone()
-				con.execute("UPDATE users SET pair=? WHERE name=? or name=?", (pairNr[0],userInput, curUser) )
-				#con.execute("INSERT INTO users (pair) VALUES (?) WHERE name=?", (pairNr,curUser) )
-				db.commit()
-				con.execute("SELECT * FROM users")
-				for x in con:
-					print(x)
-
-			#pair exists
-			#get locs
-			locLat1, locLon1 = con.execute("SELECT locLat, locLon FROM users WHERE name=?", (curUser)).fetchone()
-			locLat2, locLon2 = con.execute("SELECT locLat, locLon FROM users WHERE name=?", (userInput)).fetchone()
-			if (locLat1 and locLon1 and locLat2 and locLon2):
-				#return
-				return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2)
-			else:
-				#ERROR!
-				error="Location data error"
-				return render_template('/find_user.html', error=error, name=curUser)
-
-
-	else:
+	elif pair == 0:
 		#User not found, return to last page
 		error="User not found"
+		return render_template('/find_user.html', error=error, name=curUser)
+	else:
+		error="User currently paired with someone else"
 		return render_template('/find_user.html', error=error, name=curUser)
 
 
@@ -168,7 +191,7 @@ def Store_User(error=None):
 	test = con.execute("SELECT * FROM users WHERE name=?", (userInput)).fetchone()
 
 	if test:
-		return redirect("/", "User already exists")
+		return render_template("/index.html", error="User already exists")
 		
 
 	con.execute("INSERT INTO users (name, locLon, locLat) VALUES (?, ?, ?)", (userInput,lon,lat) )
