@@ -1,0 +1,43 @@
+<!doctype html>
+<head>
+	<style type="text/css" media="screen">
+
+	table{
+	border-collapse:collapse;
+	border:1px solid black;
+	}
+
+	table td, th{
+	border:1px solid black;
+	}
+	</style>
+
+	<title>ミト</title>
+	<h1>ミト</h1>
+</head>
+	<body>
+	<h2>Makes meeting up with friends easy!</h2>
+
+	<h3> Thank you! Your username is: {{ name }} </h3>
+
+	{% if error %}
+
+	<h4>User not found! Which user do you want to connect with?</h4>
+
+	{% else %}
+
+	<h4>Which user do you want to connect with?</h4>
+		
+	{% endif %}
+	<h5>By connecting to a user, you are allowing this site and the other users access to your GPS-location!</h5>
+
+	<form action="Find_User_form" method="POST">
+		    Find user:
+		    <br>
+		    <input type="text" name="find_User">
+		    <br>
+		    <input type="text" name="cur_User" value="{{ name }}" readonly>
+		    <br>
+		    <input type="submit" value="Search">
+		</form>
+	</body>

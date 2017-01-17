@@ -1,0 +1,55 @@
+<!doctype html>
+<head>
+	<style type="text/css" media="screen">
+
+	table{
+	border-collapse:collapse;
+	border:1px solid black;
+	}
+
+	table td, th{
+	border:1px solid black;
+	}
+	</style>
+
+	<script type="text/javascript">
+		if(navigator.geolocation){
+			navigator.geolocation.getCurrentPosition(showPosition);
+		}
+		
+		function showPosition(position) {
+			var pos = {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude
+			};
+            document.getElementById("lon").setAttribute("value", position.coords.longitude);
+            document.getElementById("lat").setAttribute("value", position.coords.latitude);
+            document.getElementById("pos").setAttribute("value", JSON.stringify(pos));
+
+		}
+	</script>
+
+	<title>ミト</title>
+	<h1>ミト</h1>
+</head>
+	<body>
+	<h2>Makes meeting up with friends easy!</h2>
+
+
+	{% if error %}
+		<h3>Username taken! Please choose another username:</h3>
+	{% else %}
+		<h3>Please choose a username:</h3>
+	{% endif %}
+	<form action="Store_User" method="POST">
+	    Desired username:
+	    <br>
+	    <input type="text" name="Username">
+	    <br>
+	    <input type="hidden" id="lon" name="lon" />
+		<input type="hidden" id="lat" name="lat"/>
+		<input type="hidden" id="pos" name="pos"/>	
+	    <input type="submit" value="Submit">
+	</form>
+
+	</body>
