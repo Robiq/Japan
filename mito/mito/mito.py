@@ -5,7 +5,7 @@ from User import *
 from Pairing import *
 
 app = Flask(__name__)
-app.config.from_object(__name__) # load config from this file , flaskr.py
+app.config.from_object(__name__) # load config from this file , mito.py
 
 # Load default config and override config from an environment variable
 app.config.update(dict(
@@ -177,8 +177,10 @@ def Find_User_form(error=None):
 				#return
 				return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2)
 			else:
-			#ERROR!
-				print("WTF")
+				#ERROR!
+				error="Location data error"
+				return render_template('/find_user.html', error=error, name=curUser)
+
 
 	else:
 		#User not found, return to last page
