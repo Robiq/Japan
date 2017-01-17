@@ -1,13 +1,25 @@
 import sqlite3 as sql
-from flask import Flask, render_template, request, redirect, url_for
+import os
+from flask import *
 from User import *
 from Pairing import *
 
 app = Flask(__name__)
+app.config.from_object(__name__) # load config from this file , flaskr.py
 
+# Load default config and override config from an environment variable
+app.config.update(dict(
+    DATABASE=os.path.join(app.root_path, 'mito.db'),
+    SECRET_KEY='iLikeThisCourseALotRightNow2016-2017',
+    USERNAME='admin',
+    PASSWORD='1234'
+))
+app.config.from_envvar('MITO_SETTINGS', silent=True)
 
-users=[]
-pairs=[]
+def connect_db():
+    """Connects to the specific database."""
+    rv = sql.connect(app.config['DATABASE'])
+    return rv
 
 def init_db():
     db = get_db()
@@ -92,6 +104,7 @@ def renderBase(error=None):
 	"""
 	Returns the rendered template of the base-page
 	"""
+
 	return render_template('index.html', error=error)
 
 #@app.route("/meet")
@@ -127,22 +140,45 @@ def Find_User_form(error=None):
 	userInput = request.form["find_User"]
 	curUser = request.form["cur_User"]
 
-	partner = findUser(userInput)
-	curUserObj = findUser(curUser)
+	db = get_db()
+	con = db.cursor()
 
+	partner = con.execute("SELECT name FROM users WHERE name=?", (userInput)).fetchone()
+	curUserObj= con.execute("SELECT name FROM users WHERE name=?", (curUser)).fetchone()
 
-	if partner != None:
-		pair = pairExists(curUserObj, partner)
-		if pair == -1:
-			#Found user, create pairing!
-			pair = addPair(curUserObj, partner)
+	if partner and curUserObj:
+		p_pair = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (userInput)).fetchone()
+		c_pair = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (curUser)).fetchone()
 		
-		locs = setUpMeeting(pair, curUserObj)
-		#PRINT nr 2 - needs correct formatting! send lat and lon as separate objects!!!
-		loc1 = locs[0]
-		loc2 = locs[1]
-		#return
-		return render_template('/meet.html', startLat=loc1[0], startLon=loc1[1], endLat=loc2[0], endLon=loc2[1])
+		if c_pair != p_pair:
+			#Paired with someone else!
+			#User not found, return to last page
+			error="User currently paired with someone else"
+			return render_template('/find_user.html', error=error, name=curUser)
+		else: 
+			#pair does not exist
+			if (not c_pair) and (not p_pair):
+				#Create pairing
+				con.execute("INSERT INTO pairs (name1, name2) VALUES (?, ?)", (userInput,curUser) )
+				db.commit()
+				pairNr = con.execute("SELECT id FROM pairs WHERE name1=? OR name2=?", (curUser,curUser)).fetchone()
+				con.execute("UPDATE users SET pair=? WHERE name=? or name=?", (pairNr[0],userInput, curUser) )
+				#con.execute("INSERT INTO users (pair) VALUES (?) WHERE name=?", (pairNr,curUser) )
+				db.commit()
+				con.execute("SELECT * FROM users")
+				for x in con:
+					print(x)
+
+			#pair exists
+			#get locs
+			locLat1, locLon1 = con.execute("SELECT locLat, locLon FROM users WHERE name=?", (curUser)).fetchone()
+			locLat2, locLon2 = con.execute("SELECT locLat, locLon FROM users WHERE name=?", (userInput)).fetchone()
+			if (locLat1 and locLon1 and locLat2 and locLon2):
+				#return
+				return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2)
+			else:
+			#ERROR!
+				print("WTF")
 
 	else:
 		#User not found, return to last page
@@ -165,21 +201,22 @@ def Store_User(error=None):
 	assert request.method == 'POST'
 	#Get input given
 	userInput = request.form["Username"]
-	conn = sql.connect("db.db")
-
-	if userInput in users:
-		return redirect("/", "User already exists")
-	
-
-	usr = User(userInput)
-	users.append(usr)
 	lon = request.form["lon"]
 	lat = request.form["lat"]
 	pos = request.form["pos"]
-	usr.addCords(lon, lat, pos)
+	
+	db = get_db()
+	con = db.cursor()
 
+	test = con.execute("SELECT * FROM users WHERE name=?", (userInput)).fetchone()
+
+	if test:
+		return redirect("/", "User already exists")
+		
+
+	con.execute("INSERT INTO users (name, locLon, locLat) VALUES (?, ?, ?)", (userInput,lon,lat) )
+	db.commit()
 	#render
-
 	return render_template('/find_user.html', name=userInput)
 
 

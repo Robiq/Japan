@@ -1,21 +1,16 @@
 drop table if exists users;
-drop table if exists loc;
-drop table if exists pair;
+drop table if exists pairs;
 
 create table users (
-  id integer autoincrement,
-  name text primary key,
-  pair int
-);
-
-create table loc (
-  id integer primary key,
+  id INTEGER primary key not null,
+  name text UNIQUE not null,
   locLon real not null,
-  locLat real not null
+  locLat real not null,
+  pair INTEGER
 );
 
-create table pair (
-  id integer primary key,
+create table pairs (
+  id INTEGER primary key,
   name1 text not null,
   name2 text not null
 );
