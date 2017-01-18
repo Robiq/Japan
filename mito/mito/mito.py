@@ -14,6 +14,9 @@ app.config.update(dict(
 ))
 app.config.from_envvar('MITO_SETTINGS', silent=True)
 
+curUser = None
+pairNum = 0
+
 def connect_db():
     """Connects to the specific database."""
     rv = sql.connect(app.config['DATABASE'])
@@ -45,7 +48,8 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
-def isPair(user1, user2):
+def isPair(user1):
+#def isPair(user1, user2):
 	"""
 	Takes two user-objects as arguments
 
@@ -54,12 +58,12 @@ def isPair(user1, user2):
 	db = get_db()
 	con = db.cursor()
 
-	partner = con.execute("SELECT name FROM users WHERE name=?", (user1)).fetchone()
-	curUserObj= con.execute("SELECT name FROM users WHERE name=?", (user2)).fetchone()
+	partner = con.execute("SELECT name FROM users WHERE name=?", (user1,)).fetchone()
+	#curUserObj= con.execute("SELECT name FROM users WHERE name=?", (user2)).fetchone()
 
-	if partner and curUserObj:
-		p_pair = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (user1)).fetchone()
-		c_pair = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (user2)).fetchone()
+	if partner:
+		p_pair = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (user1,)).fetchone()
+		c_pair = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (curUser,)).fetchone()
 		
 		if c_pair != p_pair:
 			#Paired with someone else!
@@ -69,10 +73,10 @@ def isPair(user1, user2):
 			#pair does not exist
 			if (not c_pair) and (not p_pair):
 				#Create pairing
-				con.execute("INSERT INTO pairs (name1, name2) VALUES (?, ?)", (user1,user2) )
+				con.execute("INSERT INTO pairs (name1, name2) VALUES (?, ?)", (user1,curUser) )
 				db.commit()
-				pairNr = con.execute("SELECT id FROM pairs WHERE name1=? OR name2=?", (user2,user2)).fetchone()
-				con.execute("UPDATE users SET pair=? WHERE name=? or name=?", (pairNr[0],user1, user2) )
+				#pairNr = con.execute("SELECT id FROM pairs WHERE name1=? OR name2=?", (curUser,curUser)).fetchone()
+				con.execute("UPDATE users SET pair=? WHERE name=? or name=?", (pairNum,user1,curUser) )
 				#con.execute("INSERT INTO users (pair) VALUES (?) WHERE name=?", (pairNr,user2) )
 				db.commit()
 				#con.execute("SELECT * FROM users")
@@ -104,8 +108,8 @@ def meet(error=None):
 	"""
 	assert request.method == 'POST'
 	#Get input from form
-	pairnum = request.form["pairnum"]
-	curUser = request.form["cur_User"]
+#	pairnum = request.form["pairnum"]
+#	curUser = request.form["cur_User"]
 
 	#Sleep
 	sleep(10)
@@ -116,12 +120,14 @@ def meet(error=None):
 	db = get_db()
 	con = db.cursor()
 	
-	userInput = con.execute("SELECT name FROM users WHERE name NOT LIKE ? and pair=?", (curUser,pairnum)).fetchone()
+	userInput = con.execute("SELECT name FROM users WHERE name NOT LIKE ? and pair=?", (curUser,pairNum)).fetchone()
 	locLat1, locLon1 = con.execute("SELECT locLat, locLon FROM users WHERE name=?", (curUser)).fetchone()
 	locLat2, locLon2 = con.execute("SELECT locLat, locLon FROM users WHERE name=?", (userInput)).fetchone()
 	if (locLat1 and locLon1 and locLat2 and locLon2):
 		#return
-		return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2, pair=pairnum, curUser=curUser)
+		#return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2, pair=pairnum, curUser=curUser)
+		return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2)
+
 	else:
 		#ERROR!
 		error="Location data error"
@@ -139,20 +145,24 @@ def Find_User_form(error=None):
 	assert request.method == 'POST'
 	#Get input from form
 	userInput = request.form["find_User"]
-	curUser = request.form["cur_User"]
+#TEST	curUser = request.form["cur_User"]
 	db = get_db()
 	con = db.cursor()
-	pair = isPair(userInput, curUser)
+
+	pair = isPair(userInput)
+	#pair = isPair(userInput, curUser)
 
 	if pair == 1:
 		#pair exists
 		#get locs
-		pairnr = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (curUser)).fetchone()
+		global pairNum
+		pairNum = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (curUser)).fetchone()
 		locLat1, locLon1 = con.execute("SELECT locLat, locLon FROM users WHERE name=?", (curUser)).fetchone()
 		locLat2, locLon2 = con.execute("SELECT locLat, locLon FROM users WHERE name=?", (userInput)).fetchone()
 		if (locLat1 and locLon1 and locLat2 and locLon2):
 			#return
-			return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2, pair=pairnr, curUser=curUser)
+#TEST			return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2, pair=pairnr, curUser=curUser)
+			return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2)
 		else:
 			#ERROR!
 			error="Location data error"
@@ -183,17 +193,17 @@ def Store_User(error=None):
 	userInput = request.form["Username"]
 	lon = request.form["lon"]
 	lat = request.form["lat"]
-	pos = request.form["pos"]
 	
 	db = get_db()
 	con = db.cursor()
 
-	test = con.execute("SELECT * FROM users WHERE name=?", (userInput)).fetchone()
+	test = con.execute("SELECT id FROM users WHERE name=?", (userInput,)).fetchone()
 
 	if test:
 		return render_template("/index.html", error="User already exists")
 		
-
+	global curUser
+	curUser = userInput
 	con.execute("INSERT INTO users (name, locLon, locLat) VALUES (?, ?, ?)", (userInput,lon,lat) )
 	db.commit()
 	#render

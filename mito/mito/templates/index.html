@@ -24,8 +24,6 @@
 			};
             document.getElementById("lon").setAttribute("value", position.coords.longitude);
             document.getElementById("lat").setAttribute("value", position.coords.latitude);
-            document.getElementById("pos").setAttribute("value", JSON.stringify(pos));
-
 		}
 	</script>
 
@@ -48,7 +46,6 @@
 	    <br>
 	    <input type="hidden" id="lon" name="lon" />
 		<input type="hidden" id="lat" name="lat"/>
-		<input type="hidden" id="pos" name="pos"/>	
 	    <input type="submit" value="Submit">
 	</form>
 
