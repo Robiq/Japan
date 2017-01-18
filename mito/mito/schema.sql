@@ -6,7 +6,8 @@ create table users (
   name text UNIQUE not null,
   locLon real not null,
   locLat real not null,
-  pair INTEGER
+  pair INTEGER,
+  timeDc real
 );
 
 create table pairs (

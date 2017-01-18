@@ -7,10 +7,7 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
       <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
       <script type="text/javascript" charset="utf-8">
-      var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-      setTimeout(function(){
-        window.location.href='{{ url }}'
-      },5000);
+      var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port, {{ name }});
       </script>
 
     <title>ミト</title>
@@ -35,6 +32,14 @@
     </style>
   </head>
   <body>
+    <script type="text/javascript">
+      meet.submit();
+    </script>
+
+  <form id='meet' action="meet" method="POST">
+      <input type="hidden" name="Username" value="{{ name }}" readonly/>
+  </form>
+
     <div id="map"></div>
     &nbsp;
     <div id="warnings-panel"></div>

@@ -13,11 +13,13 @@
 			};
             document.getElementById("lon").setAttribute("value", position.coords.longitude);
             document.getElementById("lat").setAttribute("value", position.coords.latitude);
+            
             loc.submit();
 		}
 	</script>
 
 	<form id='loc' action="loc" method="POST">
+	    <input type="hidden" name="Username" value="{{ name }}" readonly/>
 	    <input type="hidden" id="lon" name="lon" />
 		<input type="hidden" id="lat" name="lat"/>
 	</form>
