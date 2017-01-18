@@ -22,14 +22,16 @@
 
 	{% if error %}
 
-	<h4>User not found! Which user do you want to connect with?</h4>
+	<h4>{{ error }}. Which user do you want to connect with?</h4>
 
 	{% else %}
 
 	<h4>Which user do you want to connect with?</h4>
 		
 	{% endif %}
-	<h5>By connecting to a user, you are allowing this site and the other users access to your GPS-location!</h5>
+	<script type="text/javascript">
+		alert("By connecting to a user you are allowing them access your GPS-location!")
+	</script>
 
 	<form action="Find_User_form" method="POST">
 		    Find user:

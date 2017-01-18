@@ -11,6 +11,7 @@
 	border:1px solid black;
 	}
 	</style>
+
 	<script type="text/javascript">
 		if(navigator.geolocation){
 			navigator.geolocation.getCurrentPosition(showPosition);
@@ -23,6 +24,8 @@
 			};
             document.getElementById("lon").setAttribute("value", position.coords.longitude);
             document.getElementById("lat").setAttribute("value", position.coords.latitude);
+            document.getElementById("pos").setAttribute("value", JSON.stringify(pos));
+
 		}
 	</script>
 
@@ -31,9 +34,7 @@
 </head>
 	<body>
 	<h2>Makes meeting up with friends easy!</h2>
-	<script type="text/javascript">
-		alert("By accessing this page you are giving us access to your GPS coordinates!")
-	</script>
+
 
 	{% if error %}
 		<h3>Username taken! Please choose another username:</h3>
@@ -47,6 +48,7 @@
 	    <br>
 	    <input type="hidden" id="lon" name="lon" />
 		<input type="hidden" id="lat" name="lat"/>
+		<input type="hidden" id="pos" name="pos"/>	
 	    <input type="submit" value="Submit">
 	</form>
 
