@@ -20,17 +20,22 @@ def updateLoc(user, lon, lat, db):
 
 def updateUsers(user, partner, db):
 	con = db.cursor()
-	con.execute("UPDATE users SET pair=? WHERE name=? or name=?", (getPair(user, con),user,partner) )
+	num = getPairId(user, con)[0]
+	con.execute("UPDATE users SET pair=? WHERE name=?", (num,user))
+	con.execute("UPDATE users SET pair=? WHERE name=?", (num,partner))
 	db.commit()
 
 def getLocUser(user, con):
 	return con.execute("SELECT locLat, locLon FROM users WHERE name=?", (user,)).fetchone()
 
+def getPairId(user, con):
+	return con.execute("SELECT id FROM pairs WHERE name1=? OR name2=?", (user,user)).fetchone()
+
 def getPair(user, con):
 	return con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (user,)).fetchone()
 
 def getPartner(user, con):
-	return con.execute("SELECT name FROM users WHERE name NOT LIKE ? and pair=?", (user,getPair(user, con))).fetchone()
+	return con.execute("SELECT name FROM users WHERE name NOT LIKE ? and pair=?", (user,getPair(user, con)[0])).fetchone()
 
 def getUser(user, con):
 	return con.execute("SELECT id FROM users WHERE name=?", (user,)).fetchone()

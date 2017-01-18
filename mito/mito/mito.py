@@ -121,15 +121,17 @@ def isPair(user, partner):
 			
 		else: 
 			#pair does not exist, create pair
-			if (not u_pair) and (not p_pair):
+			print(not(u_pair and p_pair))
+			if not (u_pair and p_pair):
 				#Create pairing
 				insertPair(user, partner, get_db())
 
 				updateUsers(user, partner, get_db())
 #				DEV
-				#con.execute("SELECT * FROM users")
-#				for x in con:
-#					print(x)
+				con = get_db().cursor()
+				con.execute("SELECT * FROM users")
+				for x in con:
+					print(x)
 			#return 1 either way
 			return 1
 	else:
@@ -165,8 +167,8 @@ def loc(error=None):
 	if partner == None:
 		#ERROR!
 		error="Pair no longer exists"
-		deleteUser(user)
-		return render_template('/disconnect.html', error=error)
+		deleteUser(user, get_db())
+		return render_template('/disconnect.html', error=error, redir=url_for('renderBase'))
 
 	partner = partner[0]
 	locLat1, locLon1 = getLocUser(user, get_db().cursor())
