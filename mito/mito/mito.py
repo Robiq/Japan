@@ -115,8 +115,8 @@ def isPair(user1):
 	"""
 	db = get_db()
 	con = db.cursor()
-
-	partner = con.execute("SELECT name FROM users WHERE name=?", (user1,)).fetchone()
+		
+	partner=con.execute("SELECT name FROM users WHERE name=?", (user1,)).fetchone()
 #	DEV
 #	con.execute("SELECT * FROM users")
 #	for x in con:
@@ -231,6 +231,13 @@ def Find_User_form(error=None):
 	userInput = request.form["find_User"]
 	db = get_db()
 	con = db.cursor()
+
+	#Hacky solution for bad server code
+	if(userInput == curUser):
+		userInput = con.execute("SELECT name FROM users WHERE name NOT LIKE ? and pair=?", (curUser,pairNum)).fetchone()
+		if type(userInput) is tuple:
+			userInput = userInput[0]
+			print(userInput)
 
 	pair = isPair(userInput)
 	if pair == 1:
