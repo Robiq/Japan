@@ -1,4 +1,5 @@
-node_modules
 *.pyc
 *.log
 *.db
+/mito/mito/mito.db
+node_modules

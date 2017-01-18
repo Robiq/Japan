@@ -8,12 +8,12 @@ from flask_socketio import SocketIO, disconnect
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
-async_mode = None
+#async_mode = None
 
 thread = None
 
 app = Flask(__name__)
-socketio = SocketIO(app, async_mode=async_mode)	#load socketio
+socketio = SocketIO(app)#, async_mode=async_mode)	#load socketio
 app.config.from_object(__name__) # load config from this file , mito.py
 
 # Load default config and override config from an environment variable
@@ -72,20 +72,20 @@ def disconnect():
     global timeDc
     timeDc = time.time()
 
-#def timeout():
-#	with app.app_context():
-#		while True:
-#			timeNow = time.time()
-#			if timeDc == None:
-#				time.sleep(10)
-#			else:
-#				
-#				if (timeNow - timeDc) > 30:
-#					removeDBEntries()
-#					break
-#				else:
-#					time.sleep(5)
-#		print("dead " + curUser)
+def timeout():
+	with app.app_context():
+		while True:
+			timeNow = time.time()
+			if timeDc == None:
+				time.sleep(10)
+			else:
+				
+				if (timeNow - timeDc) > 30:
+					removeDBEntries()
+					break
+				else:
+					time.sleep(5)
+		print("dead " + curUser)
 
 def removeDBEntries():
 	db = get_db()
@@ -125,6 +125,7 @@ def isPair(user1):
 	if partner:
 		p_pair = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (user1,)).fetchone()
 		c_pair = con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (curUser,)).fetchone()
+#		Dev
 		print("Pairs")
 		print(p_pair)
 		print(c_pair)
@@ -196,7 +197,6 @@ def loc(error=None):
 	if userInput == None:
 		#ERROR!
 		error="Pair no longer exists"
-#		TODO CHECK THAT THE ADDED BELOW WORKS
 		con.execute("DELETE FROM users WHERE name=?", (curUser,))
 		db.commit()
 		return render_template('/disconnect.html', error=error)
@@ -214,7 +214,7 @@ def loc(error=None):
 
 @app.route("/meet")
 def meet(error=None):
-	time.sleep(10)
+	time.sleep(2)
 	return render_template('/loc.html')
 
 @app.route("/Find_User_form", methods=['POST'])
@@ -246,10 +246,10 @@ def Find_User_form(error=None):
 		print(pairNum, curUser, userInput)
 		if (locLat1 and locLon1 and locLat2 and locLon2):
 			#return
-		#	global thread
-		#	if thread is None:
-		#		thread = Thread(target=timeout)
-		#		thread.start()
+			global thread
+			if thread is None:
+				thread = Thread(target=timeout)
+				thread.start()
 			return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2, url=url_for('meet'))
 			
 		else:
@@ -282,6 +282,7 @@ def Store_User(error=None):
 	userInput = request.form["Username"]
 	lon = request.form["lon"]
 	lat = request.form["lat"]
+
 	
 	db = get_db()
 	con = db.cursor()
