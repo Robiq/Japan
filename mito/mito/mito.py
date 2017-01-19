@@ -12,10 +12,10 @@ from my_database import *
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
-#async_mode = None
+async_mode = None
 
 app = Flask(__name__)
-socketio = SocketIO(app)#, async_mode=async_mode)	#load socketio
+socketio = SocketIO(app, async_mode=async_mode)	#load socketio
 app.config.from_object(__name__) # load config from this file , mito.py
 
 # Load default config and override config from an environment variable

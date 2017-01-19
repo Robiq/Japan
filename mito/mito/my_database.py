@@ -31,7 +31,7 @@ def deleteUser(user, db):
 	con.execute("DELETE FROM users WHERE name=?", (user,))
 	db.commit()
 #	DEV
-	print("Deleted " + user)
+#	print("Deleted " + user)
 
 def updateMidpoint(user, partner, db):
 	con = db.cursor()
