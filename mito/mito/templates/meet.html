@@ -90,21 +90,7 @@
           }
         });
       }
-/*
-      function showSteps(directionResult, markerArray, stepDisplay, map) {
-        // For each step, place a marker, and add the text to the marker's infowindow.
-        // Also attach the marker to an array so we can keep track of it and remove it
-        // when calculating new routes.
-        var myRoute = directionResult.routes[0].legs[0];
-        for (var i = 0; i < myRoute.steps.length; i++) {
-          var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
-          marker.setMap(map);
-          marker.setPosition(myRoute.steps[i].start_location);
-          attachInstructionText(
-              stepDisplay, marker, myRoute.steps[i].instructions, map);
-        }
-      }
-*/
+
       function attachInstructionText(stepDisplay, marker, text, map) {
         google.maps.event.addListener(marker, 'click', function() {
           // Open an info window when the marker is clicked on, containing the text
@@ -116,17 +102,22 @@
 
     </script>
      <script type="text/javascript">
+     //Submit form after 20 seconds
       setTimeout(function(){
         meet.submit();
       }, 20000);
     </script>
+    <!-- google maps api call -->
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFOR5KGBfesvpkW8hl633QaA2H-Q9bdaU&callback=initMap">
     </script>
+    <!-- Socket connection code for flask-socketio -->
      <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
       <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
       <script type="text/javascript" charset="utf-8">
+      //Connect to socket
       var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+       //When connected, send username to server
        socket.on('connect', function() {
         socket.emit('msg', {data:'{{ name }}'});
       });

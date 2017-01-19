@@ -2,22 +2,23 @@
 <html>
   <head>
    <script type="text/javascript">
+		//Get users position
 		if(navigator.geolocation){
 			navigator.geolocation.getCurrentPosition(showPosition);
 		}
-		
+		//Get latitude and longitude
 		function showPosition(position) {
 			var pos = {
 				lat: position.coords.latitude,
 				lng: position.coords.longitude
 			};
+			//Paste information in to form
             document.getElementById("lon").setAttribute("value", position.coords.longitude);
             document.getElementById("lat").setAttribute("value", position.coords.latitude);
-            
+            //Submit form
             loc.submit();
 		}
 	</script>
-
 	<form id='loc' action="loc" method="POST">
 	    <input type="hidden" name="Username" value="{{ name }}" readonly/>
 	    <input type="hidden" id="lon" name="lon" />

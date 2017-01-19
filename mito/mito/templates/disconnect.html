@@ -16,12 +16,13 @@
 </head>
 	<body>
 	<h2>Makes meeting up with friends easy!</h2>
-	
+	<!-- if there is an error sent to the page -->
 	{% if error %}
 		<h3> {{ error }}! Thank you for using our service!</h3>
 		<a href="{{ redir }}">Main Page<a/>
+
+	<!-- Unknown source for disconnection -->
 	{% else %}
 		<h3>Unknow error! Thanks for using our service!</h3>
 	{% endif %}
-
 	</body>

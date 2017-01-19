@@ -12,15 +12,17 @@
 	}
 	</style>
 	<script type="text/javascript">
+		//Get users position
 		if(navigator.geolocation){
 			navigator.geolocation.getCurrentPosition(showPosition);
 		}
-		
+		//Get latitude and longitude
 		function showPosition(position) {
 			var pos = {
 				lat: position.coords.latitude,
 				lng: position.coords.longitude
 			};
+			//Paste information in to form
             document.getElementById("lon").setAttribute("value", position.coords.longitude);
             document.getElementById("lat").setAttribute("value", position.coords.latitude);
 		}
@@ -34,12 +36,14 @@
 	<script type="text/javascript">
 		alert("By accessing this page you are giving us access to your GPS coordinates!")
 	</script>
-
+	<!-- if there is an error sent to the page -->
 	{% if error %}
 		<h3>Username taken! Please choose another username:</h3>
+	<!-- Usual behavious -->
 	{% else %}
 		<h3>Please choose a username:</h3>
 	{% endif %}
+	
 	<form action="Store_User" method="POST">
 	    Desired username:
 	    <br>
@@ -49,5 +53,4 @@
 		<input type="hidden" id="lat" name="lat"/>
 	    <input type="submit" value="Submit">
 	</form>
-
 	</body>
