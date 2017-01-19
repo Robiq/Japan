@@ -34,20 +34,7 @@
     </style>
   </head>
   <body>
-    <script type="text/javascript">
-      setTimeout(function(){
-        meet.submit();
-      }, 10000);
-      /* var x = setInterval(function(){
-      meet.submit();
-      doClear();
-    },10000);
-      function doClear(){
-        clearInterval(x);
-      } */
-    </script>
-
-  <form id='meet' action="meet" method="POST">
+    <form id='meet' action="meet" method="POST">
       <input type="hidden" name="Username" value="{{ name }}" readonly/>
   </form>
 
@@ -137,6 +124,18 @@
         });
       }
 
+    </script>
+     <script type="text/javascript">
+      setTimeout(function(){
+        meet.submit();
+      }, 20000);
+      /* var x = setInterval(function(){
+      meet.submit();
+      doClear();
+    },10000);
+      function doClear(){
+        clearInterval(x);
+      } */
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFOR5KGBfesvpkW8hl633QaA2H-Q9bdaU&callback=initMap">

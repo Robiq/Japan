@@ -12,7 +12,7 @@ from my_database import *
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
-async_mode = None
+async_mode = "eventlet"
 
 app = Flask(__name__)
 socketio = SocketIO(app, async_mode=async_mode)	#load socketio
@@ -107,9 +107,9 @@ def timeout():
 				if timeDc[0]:
 					if type(timeDc) is tuple:
 						timeDc = timeDc[0]
-					if (timeNow - timeDc) > 30:
+					if (timeNow - timeDc) > 60:
 						removeDBEntries(user[0], get_db())
-			time.sleep(2)
+			time.sleep(4)
 
 def stopThread():
 	global doRun
