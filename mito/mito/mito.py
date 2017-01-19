@@ -109,7 +109,7 @@ def timeout():
 						timeDc = timeDc[0]
 					if (timeNow - timeDc) > 30:
 						removeDBEntries(user[0], get_db())
-			time.sleep(10)
+			time.sleep(2)
 
 def stopThread():
 	global doRun
