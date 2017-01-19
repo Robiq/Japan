@@ -67,7 +67,10 @@ def getPair(user, con):
 	return con.execute("SELECT pair FROM users WHERE name=? and pair IS NOT NULL", (user,)).fetchone()
 
 def getPartner(user, con):
-	return con.execute("SELECT name FROM users WHERE name NOT LIKE ? and pair=?", (user,getPair(user, con)[0])).fetchone()
+	pairNum = getPair(user, con)
+	if(type(pairNum)) is tuple:
+		pairNum = pairNum[0]
+	return con.execute("SELECT name FROM users WHERE name NOT LIKE ? and pair=?", (user,pairNum)).fetchone()
 
 def getUser(user, con):
 	return con.execute("SELECT name FROM users WHERE name=?", (user,)).fetchone()
