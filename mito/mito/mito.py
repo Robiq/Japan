@@ -69,8 +69,9 @@ def close_db(error):
 
 #-------------------------------------------------------
 #	 DEV
-#@socketio.on('connect')
-#def connect():
+@socketio.on('connect')
+def connect():
+	pass
 #    print("new connection: " + request.sid)
 
 @socketio.on('msg')
