@@ -10,6 +10,10 @@
 	table td, th{
 	border:1px solid black;
 	}
+
+	.warn{
+		color:red;
+	}
 	</style>
 
 	<title>ミト</title>
@@ -29,9 +33,7 @@
 	<h4>Which user do you want to connect with?</h4>
 		
 	{% endif %}
-
-	<h4>By connecting to a user you are allowing them access your GPS-location!</h4>
-	<br>
+	<h4 class="warn">By connecting to a user you are allowing them access your GPS-location!</h4>
 	<form action="Find_User_form" method="POST">
 		    Find user:
 		    <br>

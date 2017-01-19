@@ -1,17 +1,18 @@
-import sqlite3 as sql
 import os
+import sys
 import time
-from my_database import *
-from threading import Thread
+import signal
 from flask import *
+import sqlite3 as sql
+from threading import Thread
 from flask_socketio import SocketIO, disconnect
+
+from my_database import *
 
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
 #async_mode = None
-
-thread = None
 
 app = Flask(__name__)
 socketio = SocketIO(app)#, async_mode=async_mode)	#load socketio
@@ -25,7 +26,16 @@ app.config.update(dict(
     PASSWORD='1234'
 ))
 app.config.from_envvar('MITO_SETTINGS', silent=True)
+thread = None
+doRun = True
+#Initiate signalhandeler
+def signal_handler(signal, frame):
+	stopThread()
+	sys.exit(0)
 
+#Bind method for handleing ctrl+c
+signal.signal(signal.SIGINT, signal_handler)
+#-------------------------------------------------------
 def connect_db():
     """Connects to the specific database."""
     rv = sql.connect(app.config['DATABASE'])
@@ -58,38 +68,53 @@ def close_db(error):
         g.sqlite_db.close()
 
 #-------------------------------------------------------
-#TODO handle session
+#	 DEV
 #@socketio.on('connect')
 #def connect():
-#	pass
-#	 setTimeDc(user, None)
-#	 DEV
 #    print("new connection: " + request.sid)
 
-#@socketio.on('disconnect')
-#def disconnect():
-#	pass
-#    setTimeDc(time.time())
-#	 DEV
-#    print('Client disconnected: ' + request.sid)
+@socketio.on('msg')
+def msg(user):
+#	DEV
+#	print(user)
+	setSID(user, request.sid, get_db())
+#	printDB("users", get_db().cursor())
+
+@socketio.on('disconnect')
+def disconnect():
+	setTimeDc(request.sid, time.time(), get_db())
+#	DEV
+#	printDB("users", get_db().cursor())
+#   print('Client disconnected: ' + request.sid)
 
 #----------------------------------------------------
 #TODO handle session
 def timeout():
 	pass
-#	with app.app_context():
-#		while True:
-#			timeNow = time.time()
-			#for all entries
-			#forloop over users
-#				timeDc = getTimeDc(user)
-#				if timeDc:				
-#					if (timeNow - timeDc) > 30:
-#						removeDBEntries(user)
-#			time.sleep(10)
-#		DEV
-#		print("dead " + curUser)
+	with app.app_context():
+		while doRun:
+			timeNow = time.time()
+			con = get_db().cursor()
+#			dev
+			printDB("users", get_db().cursor())
+			usList = con.execute("SELECT name FROM users").fetchall()
+			#for-loop over all entries
+			for user in usList:
+				timeDc = getTimeDc(user, con)
+#				dev
+#				print("User and time")
+#				print(user)
+#				print(timeDc[0])
+				if timeDc[0]:
+					if type(timeDc) is tuple:
+						timeDc = timeDc[0]
+					if (timeNow - timeDc) > 15:#30:
+						removeDBEntries(user[0], get_db())
+			time.sleep(10)
 
+def stopThread():
+	global doRun
+	doRun = False
 
 def isPair(user, partner):
 	"""
@@ -100,9 +125,7 @@ def isPair(user, partner):
 	partner = getUser(partner, get_db().cursor())
 
 #	DEV
-#	con.execute("SELECT * FROM users")
-#	for x in con:
-#		print(x)
+#	printDB("users", get_db().cursor())
 
 	if partner:
 		partner = partner[0]
@@ -111,30 +134,21 @@ def isPair(user, partner):
 		
 #		Dev
 		print("Pairs")
-		print(p_pair)
-		print(u_pair)
-		print(u_pair != p_pair)
-
+		print(p_pair, u_pair, u_pair != p_pair)
 		if u_pair != p_pair:
 			#Paired with someone else!
 			return 2
 			
 		else: 
 			#pair does not exist, create pair
-			print(not(u_pair and p_pair))
 			if not (u_pair and p_pair):
 				#Create pairing
 				insertPair(user, partner, get_db())
 				updateUsers(user, partner, get_db())
 #				DEV
-				print("INSERTED")
-				con = get_db().cursor()
-				con.execute("SELECT * FROM users")
-				for x in con:
-					print(x)
-				con.execute("SELECT * FROM pairs")
-				for x in con:
-					print(x)
+#				print("INSERTED")
+#				printDB("users", get_db().cursor())
+#				printDB("pairs", get_db().cursor())
 
 			#return 1 either way
 			return 1
@@ -147,6 +161,12 @@ def renderBase(error=None):
 	"""
 	Returns the rendered template of the base-page
 	"""
+	#Start thread for managing sessions
+	global thread
+	if thread is None: 
+		thread = Thread(target=timeout)
+		thread.start()
+
 	return render_template('index.html', error=error)
 
 @app.route("/loc", methods=['POST'])
@@ -220,14 +240,10 @@ def Find_User_form(error=None):
 
 #		Dev
 #		print(locLat1, locLon1, locLat2, locLon2)
-		print("Users")
-		print(user, partner)
+#		print("Users")
+#		print(user, partner)
 		if (locLat1 and locLon1 and locLat2 and locLon2):
 			#return
-			global thread
-			if thread is None:
-				thread = Thread(target=timeout)
-				thread.start()
 			return render_template('/meet.html', startLat=locLat1, startLon=locLon1, midLon=midLon, midLat=midLat, endLat=locLat2, endLon=locLon2, name=user)
 			
 		else:

@@ -3,9 +3,9 @@ def findMidpoint(user, partner, con):
 	uLat, uLon = getLocUser(user, con)
 	#find loc partner
 	pLat, pLon = getLocUser(partner, con)
+#	DEV
+#	print(uLat, uLon, pLat, pLon)
 	#calc mean
-	print(uLat, uLon, pLat, pLon)
-	#TODO error here! Float and Unicode incompatible - tuple?
 	meanLat = ((uLat + pLat) / 2)
 	meanLon = ((uLon + pLon) / 2)
 	#return mean
@@ -30,6 +30,8 @@ def deleteUser(user, db):
 	con = db.cursor()
 	con.execute("DELETE FROM users WHERE name=?", (user,))
 	db.commit()
+#	DEV
+	print("Deleted " + user)
 
 def updateMidpoint(user, partner, db):
 	con = db.cursor()
@@ -71,21 +73,40 @@ def getUser(user, con):
 	return con.execute("SELECT name FROM users WHERE name=?", (user,)).fetchone()
 
 #TODO handle session
-#	def getTimeDc(user):
-#		return con.execute("SELECT timeDc FROM users WHERE name=?", (user,)).fetchone()
-#	def setTimeDc(user, time):
-#		
-#	def removeDBEntries(user):
-#		otherUser = getPartner(user)
-#		if otherUser:
-#			pairNum = getPair(user)
-#			con.execute("UPDATE users SET pair=NULL WHERE name=?", (otherUser[0],))
-#			deleteUser(user)
-#			con.execute("DELETE FROM pairs WHERE id=?", (pairNum,))
-#		#db.commit()
-#	DEV
-#		#con.execute("SELECT * FROM users")
-#		#for x in con:
-#		#	print(x)
-#		else:
-#			print("WTFFF")
+def getTimeDc(user, con):
+	return con.execute("SELECT timeDc FROM users WHERE name=?", (user)).fetchone()
+
+def setSID(user, sid, db):
+	con = db.cursor()
+	con.execute("UPDATE users SET sid=?, timeDc=NULL  WHERE name=?", (sid, user))
+	db.commit()
+
+def setTimeDc(sid, time, db):
+	con = db.cursor()
+	con.execute("UPDATE users SET timeDc=?  WHERE sid=?", (time, sid))
+	db.commit()
+
+#DEV
+def printDB(name, con):
+	query = "SELECT * FROM " + name
+	a = con.execute(query)
+	print(name)
+	for x in a:
+		print(x)
+	
+	
+def removeDBEntries(user, db):
+	con = db.cursor()
+	otherUser = getPartner(user, con)
+	if otherUser:
+		pairNum = getPair(user, con)
+#		con.execute("UPDATE users SET pair=NULL WHERE name=?", (otherUser[0],))
+		deleteUser(user, db)
+		if type(pairNum) is tuple:
+			pairNum = pairNum[0]
+		con.execute("DELETE FROM pairs WHERE id=?", (pairNum,))
+		db.commit()
+#		DEV
+		printDB("users", con)
+	else:
+		print("WTFFF")
