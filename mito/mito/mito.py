@@ -95,7 +95,7 @@ def timeout():
 			timeNow = time.time()
 			con = get_db().cursor()
 #			dev
-			printDB("users", get_db().cursor())
+#			printDB("users", get_db().cursor())
 			usList = con.execute("SELECT name FROM users").fetchall()
 			#for-loop over all entries
 			for user in usList:
@@ -132,8 +132,8 @@ def isPair(user, partner):
 		p_pair=getPair(partner, get_db().cursor())
 		
 #		Dev
-		print("Pairs")
-		print(p_pair, u_pair, u_pair != p_pair)
+#		print("Pairs")
+#		print(p_pair, u_pair, u_pair != p_pair)
 		if u_pair != p_pair:
 			#Paired with someone else!
 			return 2

@@ -90,12 +90,12 @@ def setTimeDc(sid, time, db):
 	db.commit()
 
 #DEV
-def printDB(name, con):
-	query = "SELECT * FROM " + name
-	a = con.execute(query)
-	print(name)
-	for x in a:
-		print(x)
+#def printDB(name, con):
+#	query = "SELECT * FROM " + name
+#	a = con.execute(query)
+#	print(name)
+#	for x in a:
+#		print(x)
 	
 	
 def removeDBEntries(user, db):
@@ -110,6 +110,6 @@ def removeDBEntries(user, db):
 		con.execute("DELETE FROM pairs WHERE id=?", (pairNum,))
 		db.commit()
 #		DEV
-		printDB("users", con)
-	else:
-		print("WTFFF")
+#		printDB("users", con)
+#	else:
+#		print("WTFFF")
