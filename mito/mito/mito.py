@@ -107,9 +107,9 @@ def timeout():
 				if timeDc[0]:
 					if type(timeDc) is tuple:
 						timeDc = timeDc[0]
-					if (timeNow - timeDc) > 15:#30:
+					if (timeNow - timeDc) > 30:
 						removeDBEntries(user[0], get_db())
-			time.sleep(2)
+			time.sleep(10)
 
 def stopThread():
 	global doRun
