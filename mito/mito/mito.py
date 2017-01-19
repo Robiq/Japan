@@ -86,7 +86,7 @@ def disconnect():
 	setTimeDc(request.sid, time.time(), get_db())
 #	DEV
 #	printDB("users", get_db().cursor())
-#   print('Client disconnected: ' + request.sid)
+#	print('Client disconnected: ' + request.sid)
 
 #----------------------------------------------------
 #TODO handle session
