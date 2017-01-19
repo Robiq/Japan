@@ -7,7 +7,7 @@ def findMidpoint(user, partner, con):
 	meanLat = ((uLat + pLat) / 2)
 	meanLon = ((uLon + pLon) / 2)
 	#return mean
-	return meanLat, meanLon
+	return meanLon, meanLat
 
 def insertPair(user, partner, db):
 	con = db.cursor()
