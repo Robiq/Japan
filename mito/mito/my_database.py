@@ -36,7 +36,7 @@ def deleteUser(user, db):
 def updateMidpoint(user, partner, db):
 	con = db.cursor()
 	midLon, midLat = findMidpoint(user, partner, con)
-	pairNum = (getPairId(user, con)[0])
+	pairNum = (getPairId(user, con))
 	if(type(pairNum)) is tuple:
 		pairNum = pairNum[0]
 	con.execute("UPDATE pairs SET mpLon=?, mplat=? WHERE id=?",(midLon,midLat, pairNum))
