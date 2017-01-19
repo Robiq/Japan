@@ -77,8 +77,8 @@ def connect():
 @socketio.on('msg')
 def msg(user):
 #	DEV
-#	print(user)
-	setSID(user, request.sid, get_db())
+#	print(user['data'])
+	setSID(user['data'], request.sid, get_db())
 #	printDB("users", get_db().cursor())
 
 @socketio.on('disconnect')
