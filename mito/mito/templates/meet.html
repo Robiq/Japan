@@ -77,7 +77,7 @@
         }
 
         var startLoc = new google.maps.LatLng({{ startLat }}, {{ startLon }});
-        var endLoc = new google.maps.LatLng( {{ endLat }}, {{ endLon }});
+        var endLoc = new google.maps.LatLng( {{ midLat }}, {{ midLon }});
         // Retrieve the start and end locations and create a DirectionsRequest using
         // WALKING directions.
         directionsService.route({
@@ -91,13 +91,19 @@
             document.getElementById('warnings-panel').innerHTML =
                 '<b>' + response.routes[0].warnings + '</b>';
             directionsDisplay.setDirections(response);
-            showSteps(response, markerArray, stepDisplay, map);
+            //showSteps(response, markerArray, stepDisplay, map);
+            var marker = new google.maps.Marker;
+            marker.setMap(map);
+            var pos = new google.maps.LatLng( {{ endLat }}, {{ endLon }});
+            marker.setPosition(pos);
+            var txt = "Partner!";
+            attachInstructionText(stepDisplay, marker, txt, map);
           } else {
             window.alert('Directions request failed due to ' + status);
           }
         });
       }
-
+/*
       function showSteps(directionResult, markerArray, stepDisplay, map) {
         // For each step, place a marker, and add the text to the marker's infowindow.
         // Also attach the marker to an array so we can keep track of it and remove it
@@ -111,7 +117,7 @@
               stepDisplay, marker, myRoute.steps[i].instructions, map);
         }
       }
-
+*/
       function attachInstructionText(stepDisplay, marker, text, map) {
         google.maps.event.addListener(marker, 'click', function() {
           // Open an info window when the marker is clicked on, containing the text

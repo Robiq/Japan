@@ -125,13 +125,17 @@ def isPair(user, partner):
 			if not (u_pair and p_pair):
 				#Create pairing
 				insertPair(user, partner, get_db())
-
 				updateUsers(user, partner, get_db())
 #				DEV
+				print("INSERTED")
 				con = get_db().cursor()
 				con.execute("SELECT * FROM users")
 				for x in con:
 					print(x)
+				con.execute("SELECT * FROM pairs")
+				for x in con:
+					print(x)
+
 			#return 1 either way
 			return 1
 	else:
@@ -161,21 +165,23 @@ def loc(error=None):
 	user = request.form["Username"]
 	lon = request.form["lon"]
 	lat = request.form["lat"]
-	
-	updateLoc(user, lon, lat, get_db())
-	partner = getPartner(user, get_db().cursor())
+	db = get_db()
+	updateLoc(user, lon, lat, db)
+	partner = getPartner(user, db.cursor())
 	if partner == None:
 		#ERROR!
 		error="Pair no longer exists"
-		deleteUser(user, get_db())
+		deleteUser(user, db)
 		return render_template('/disconnect.html', error=error, redir=url_for('renderBase'))
 
 	partner = partner[0]
-	locLat1, locLon1 = getLocUser(user, get_db().cursor())
-	locLat2, locLon2 = getLocUser(partner, get_db().cursor())
+	updateMidpoint(user, partner, db)
+	locLat1, locLon1 = getLocUser(user, db.cursor())
+	locLat2, locLon2 = getLocUser(partner, db.cursor())
+	midLon, midLat = getMidLoc(user, db)
 	if (locLat1 and locLon1 and locLat2 and locLon2):
 		#return
-		return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2, name=user)
+		return render_template('/meet.html', startLat=locLat1, startLon=locLon1, midLon=midLon, midLat=midLat, endLat=locLat2, endLon=locLon2, name=user)
 		
 	else:
 		#ERROR!
@@ -210,6 +216,8 @@ def Find_User_form(error=None):
 		
 		locLat1, locLon1 = getLocUser(user, get_db().cursor())
 		locLat2, locLon2 = getLocUser(partner, get_db().cursor())
+		midLon, midLat = getMidLoc(user, get_db())
+
 #		Dev
 #		print(locLat1, locLon1, locLat2, locLon2)
 		print("Users")
@@ -220,7 +228,7 @@ def Find_User_form(error=None):
 			if thread is None:
 				thread = Thread(target=timeout)
 				thread.start()
-			return render_template('/meet.html', startLat=locLat1, startLon=locLon1, endLat=locLat2, endLon=locLon2, name=user)
+			return render_template('/meet.html', startLat=locLat1, startLon=locLon1, midLon=midLon, midLat=midLat, endLat=locLat2, endLon=locLon2, name=user)
 			
 		else:
 			#ERROR!

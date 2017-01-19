@@ -13,5 +13,7 @@ create table users (
 create table pairs (
   id INTEGER primary key,
   name1 text not null,
-  name2 text not null
+  name2 text not null,
+  mpLon real not null,
+  mpLat real not null
 );
