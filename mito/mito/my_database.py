@@ -4,6 +4,8 @@ def findMidpoint(user, partner, con):
 	#find loc partner
 	pLat, pLon = getLocUser(partner, con)
 	#calc mean
+	print(uLat, uLon, pLat, pLon)
+	#TODO error here! Float and Unicode incompatible - tuple?
 	meanLat = ((uLat + pLat) / 2)
 	meanLon = ((uLon + pLon) / 2)
 	#return mean
