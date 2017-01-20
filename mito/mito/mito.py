@@ -11,11 +11,11 @@ from flask_socketio import SocketIO, disconnect
 from my_database import *
 #Debugging output is sent to debugLog.txt
 logging.basicConfig(stream=sys.stderr,
-					filename='mito/debugLog.txt',
+					filemode='w+')
+					filename='debugLog.txt',
 					level=logging.DEBUG,
 					format='%(asctime)-8s:	%(message)s',
 					datefmt='%m/%d/%Y %H:%M:%S',
-					filemode='w+')
 #debugging: set manually to true for debug printout in console
 #DEV = False
 
