@@ -2,6 +2,5 @@
 *.log
 *.db
 node_modules
-~/GIT/FINAL/mito/mito.egg-info
-~/GIT/FINAL/mito/mito/mito.db
-~/GIT/mito/mito/mito.db
+**/mito/mito.egg-info
+**/mito.db
