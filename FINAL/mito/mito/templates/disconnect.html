@@ -1,25 +1,52 @@
 <!doctype html>
 <head>
-	<style type="text/css" media="screen">
-
-	table{
-	border-collapse:collapse;
-	border:1px solid black;
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+	<style>
+	body {font-family: "Raleway", sans-serif;}
+	body, html {
+		height: 100%;
 	}
 
-	table td, th{
-	border:1px solid black;
+	h1, h2, h3, .me{
+	    position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	h1{
+		font-size: 400%;
+		margin-top: -150px;
+	}
+	h2{
+		font-size: 150%;
+		margin-top: -50px;
+	}
+	h3{
+		font-size: 100%;
+		margin-top: 50px;
+	}
+	.me{
+		margin-top: +150px;
+	}
+	html { 
+	  background: url( {{url_for('static', filename='map.jpg')}} ) no-repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
 	}
 	</style>
 	<title>ミト</title>
-	<h1>ミト</h1>
 </head>
 	<body>
+	<h1>ミト</h1>
 	<h2>Makes meeting up with friends easy!</h2>
 	<!-- if there is an error sent to the page -->
 	{% if error %}
 		<h3> {{ error }}! Thank you for using our service!</h3>
-		<a href="{{ redir }}">Main Page<a/>
+		<a class="me" href="{{ redir }}">Main Page<a/>
 
 	<!-- Unknown source for disconnection -->
 	{% else %}

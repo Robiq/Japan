@@ -118,9 +118,18 @@
       //Connect to socket
       var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
        //When connected, send username to server
-       socket.on('connect', function() {
-        socket.emit('msg', {data:'{{ name }}'});
-      });
+       try{
+         socket.on('connect', function() {
+          socket.emit('msg', {data:'{{ name }}'});
+        });
+        socket.on('disconnect', function(){
+         socket.disconnect();
+         console.log('user disconnected');
+        });
+       } catch(err){
+        console.log(err.message);
+       }
+
       </script>
   </body>
 </html>

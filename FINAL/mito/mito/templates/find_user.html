@@ -1,26 +1,59 @@
 <!doctype html>
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css" media="screen">
-
-	table{
-	border-collapse:collapse;
-	border:1px solid black;
+	body, html {height: 100%}
+	h1, h2, h3, h4, .warn, .me{
+	    position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	h1{
+		font-size: 400%;
+		margin-top: -150px;
+		text-align: justify;
+	}
+	h2{
+		font-size: 150%;
+		margin-top: -50px;
+		text-align: justify;
+	}
+	h3{
+		font-size: 140%;
+		margin-top: 0;
+		text-align: justify;
+	}
+	h4{
+		font-size: 90%;
+		margin-top: 50px;
+		text-align: justify;
+	}
+	.me{
+		margin-top: +150px;
 	}
 
-	table td, th{
-	border:1px solid black;
+	html { 
+	  background: url( {{url_for('static', filename='map.jpg')}} ) no-repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
 	}
-
 	.warn{
+		font-size: 75%;
+		margin-top: +100px;
+		text-align: justify;
 		color:red;
 	}
 	</style>
 
 	<title>ミト</title>
-	<h1>ミト</h1>
 
 </head>
 	<body>
+	<h1>ミト</h1>
 	<h2>Makes meeting up with friends easy!</h2>
 
 	<h3> Thank you! Your username is: {{ name }} </h3>
@@ -32,9 +65,9 @@
 	{% else %}
 	<h4>Which user do you want to connect with?</h4>
 	{% endif %}
-	
-	<h4 class="warn">By connecting to a user you are allowing them access your GPS-location!</h4>
-	<form action="Find_User_form" method="POST">
+
+	<h5 class="warn">By connecting to a user you are allowing them access your GPS-location!</h5>
+	<form class="me" action="Find_User_form" method="POST">
 		    Find user:
 		    <br>
 		    <input type="text" name="find_User">

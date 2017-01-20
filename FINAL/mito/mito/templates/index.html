@@ -1,16 +1,43 @@
 <!doctype html>
 <head>
-	<style type="text/css" media="screen">
-
-	table{
-	border-collapse:collapse;
-	border:1px solid black;
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+	<style>
+	body {font-family: "Raleway", sans-serif;}
+	body, html {
+		height: 100%;
 	}
-
-	table td, th{
-	border:1px solid black;
+	html { 
+	  background: url( {{url_for('static', filename='map.jpg')}} ) no-repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+	}
+	h1, h2, h4, .me{
+	    position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	h1{
+		font-size: 400%;
+		margin-top: -150px;
+	}
+	h2{
+		font-size: 150%;
+		margin-top: -50px;
+	}
+	h4{
+		font-size: 100%;
+		margin-top: 50px;
+	}
+	.me{
+		margin-top: +150px;
 	}
 	</style>
+
 	<script type="text/javascript">
 		//Get users position
 		if(navigator.geolocation){
@@ -29,28 +56,33 @@
 	</script>
 
 	<title>ミト</title>
-	<h1>ミト</h1>
 </head>
-	<body>
-	<h2>Makes meeting up with friends easy!</h2>
-	<script type="text/javascript">
-		alert("By accessing this page you are giving us access to your GPS coordinates!")
-	</script>
+
+<body>
+<div class="text">
+	<h1>ミト</h1>
+	<h2>Meet up with your friends!</h2>
+
 	<!-- if there is an error sent to the page -->
 	{% if error %}
-		<h3>Username taken! Please choose another username:</h3>
+		<h4>Username taken! Please choose another username:</h4>
 	<!-- Usual behavious -->
 	{% else %}
-		<h3>Please choose a username:</h3>
+		<h4>Please choose a username:</h4>
 	{% endif %}
-	
-	<form action="Store_User" method="POST">
+
+	<form class="me" action="Store_User" method="POST">
 	    Desired username:
 	    <br>
 	    <input type="text" name="Username">
 	    <br>
 	    <input type="hidden" id="lon" name="lon" />
 		<input type="hidden" id="lat" name="lat"/>
-	    <input type="submit" value="Submit">
+	    <input type="submit" value="Submit" >
 	</form>
+	</div>
 	</body>
+
+		<script type="text/javascript">
+		alert("By accessing this page you are giving us access to your GPS coordinates!")
+	</script>
