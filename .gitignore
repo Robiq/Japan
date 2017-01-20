@@ -1,5 +1,7 @@
 *.pyc
 *.log
 *.db
-/mito/mito/mito.db
 node_modules
+~/GIT/FINAL/mito/mito.egg-info
+~/GIT/FINAL/mito/mito/mito.db
+~/GIT/mito/mito/mito.db

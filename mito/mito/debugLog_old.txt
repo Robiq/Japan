@@ -1,0 +1,312 @@
+01/20/2017 12:14:54:	Server initialized for threading.
+01/20/2017 12:14:54:	WebSocket transport not available. Install eventlet or gevent and gevent-websocket for improved performance.
+01/20/2017 12:14:54:	 * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+01/20/2017 12:14:58:	users
+01/20/2017 12:14:58:	None
+01/20/2017 12:14:58:	127.0.0.1 - - [20/Jan/2017 12:14:58] "GET / HTTP/1.1" 200 -
+01/20/2017 12:14:58:	127.0.0.1 - - [20/Jan/2017 12:14:58] "GET / HTTP/1.1" 200 -
+01/20/2017 12:15:02:	users
+01/20/2017 12:15:02:	None
+01/20/2017 12:15:03:	127.0.0.1 - - [20/Jan/2017 12:15:03] "GET / HTTP/1.1" 200 -
+01/20/2017 12:15:06:	users
+01/20/2017 12:15:06:	None
+01/20/2017 12:15:08:	127.0.0.1 - - [20/Jan/2017 12:15:08] "POST /Store_User HTTP/1.1" 200 -
+01/20/2017 12:15:10:	users
+01/20/2017 12:15:10:	(1, u'b', 139.490036, 35.3391703, None, None, None)
+01/20/2017 12:15:10:	None
+01/20/2017 12:15:10:	User: (u'b',) and time None
+01/20/2017 12:15:11:	127.0.0.1 - - [20/Jan/2017 12:15:11] "POST /Store_User HTTP/1.1" 200 -
+01/20/2017 12:15:13:	User currently in isPair: a
+01/20/2017 12:15:13:	users
+01/20/2017 12:15:13:	(1, u'b', 139.490036, 35.3391703, None, None, None)
+01/20/2017 12:15:13:	(2, u'a', 139.490036, 35.3391703, None, None, None)
+01/20/2017 12:15:13:	None
+01/20/2017 12:15:13:	p_pair: None | u_pair: None | u_pair != p_pair: False
+01/20/2017 12:15:13:	Find midpoint: Lat1: 35.339170 Lat2: 35.339170  Lon1: 139.490036 Lon2: 139.490036
+01/20/2017 12:15:13:	Midpoint: Mean latitude: 35.339170 Mean longitude: 139.490036
+01/20/2017 12:15:13:	pairs
+01/20/2017 12:15:13:	(1, u'a', u'b', 139.490036, 35.3391703)
+01/20/2017 12:15:13:	None
+01/20/2017 12:15:13:	pairID: 1
+01/20/2017 12:15:13:	Inserted into database: user = a and partner = b
+01/20/2017 12:15:13:	users
+01/20/2017 12:15:13:	(1, u'b', 139.490036, 35.3391703, 1, None, None)
+01/20/2017 12:15:13:	(2, u'a', 139.490036, 35.3391703, 1, None, None)
+01/20/2017 12:15:13:	None
+01/20/2017 12:15:13:	pairs
+01/20/2017 12:15:13:	(1, u'a', u'b', 139.490036, 35.3391703)
+01/20/2017 12:15:13:	None
+01/20/2017 12:15:13:	Location data: Latitude user: 35.339170 Longitude user: 139.490036
+01/20/2017 12:15:13:	Location data: Latitude partner: 35.339170 Longitude partner: 139.490036
+01/20/2017 12:15:13:	127.0.0.1 - - [20/Jan/2017 12:15:13] "POST /Find_User_form HTTP/1.1" 200 -
+01/20/2017 12:15:14:	0ccb24b50dba4d2e9fcf8b1ecc4ba128: Sending packet OPEN data {'pingInterval': 25000, 'pingTimeout': 60000, 'upgrades': [], 'sid': '0ccb24b50dba4d2e9fcf8b1ecc4ba128'}
+01/20/2017 12:15:14:	0ccb24b50dba4d2e9fcf8b1ecc4ba128: Sending packet MESSAGE data 0
+01/20/2017 12:15:14:	127.0.0.1 - - [20/Jan/2017 12:15:14] "GET /socket.io/?EIO=3&transport=polling&t=1484882114031-0 HTTP/1.1" 200 -
+01/20/2017 12:15:14:	0ccb24b50dba4d2e9fcf8b1ecc4ba128: Received packet MESSAGE data 2["msg",{"data":"a"}]
+01/20/2017 12:15:14:	received event "msg" from 0ccb24b50dba4d2e9fcf8b1ecc4ba128 [/]
+01/20/2017 12:15:14:	Client connected: a
+01/20/2017 12:15:14:	users
+01/20/2017 12:15:14:	(1, u'b', 139.490036, 35.3391703, 1, None, None)
+01/20/2017 12:15:14:	(2, u'a', 139.490036, 35.3391703, 1, None, u'0ccb24b50dba4d2e9fcf8b1ecc4ba128')
+01/20/2017 12:15:14:	None
+01/20/2017 12:15:14:	127.0.0.1 - - [20/Jan/2017 12:15:14] "POST /socket.io/?EIO=3&transport=polling&t=1484882114072-1&sid=0ccb24b50dba4d2e9fcf8b1ecc4ba128 HTTP/1.1" 200 -
+01/20/2017 12:15:14:	users
+01/20/2017 12:15:14:	(1, u'b', 139.490036, 35.3391703, 1, None, None)
+01/20/2017 12:15:14:	(2, u'a', 139.490036, 35.3391703, 1, None, u'0ccb24b50dba4d2e9fcf8b1ecc4ba128')
+01/20/2017 12:15:14:	None
+01/20/2017 12:15:14:	User: (u'a',) and time None
+01/20/2017 12:15:14:	User: (u'b',) and time None
+01/20/2017 12:15:18:	users
+01/20/2017 12:15:18:	(1, u'b', 139.490036, 35.3391703, 1, None, None)
+01/20/2017 12:15:18:	(2, u'a', 139.490036, 35.3391703, 1, None, u'0ccb24b50dba4d2e9fcf8b1ecc4ba128')
+01/20/2017 12:15:18:	None
+01/20/2017 12:15:18:	User: (u'a',) and time None
+01/20/2017 12:15:18:	User: (u'b',) and time None
+01/20/2017 12:15:22:	users
+01/20/2017 12:15:22:	(1, u'b', 139.490036, 35.3391703, 1, None, None)
+01/20/2017 12:15:22:	(2, u'a', 139.490036, 35.3391703, 1, None, u'0ccb24b50dba4d2e9fcf8b1ecc4ba128')
+01/20/2017 12:15:22:	None
+01/20/2017 12:15:22:	User: (u'a',) and time None
+01/20/2017 12:15:22:	User: (u'b',) and time None
+01/20/2017 12:15:24:	User currently in isPair: b
+01/20/2017 12:15:24:	users
+01/20/2017 12:15:24:	(1, u'b', 139.490036, 35.3391703, 1, None, None)
+01/20/2017 12:15:24:	(2, u'a', 139.490036, 35.3391703, 1, None, u'0ccb24b50dba4d2e9fcf8b1ecc4ba128')
+01/20/2017 12:15:24:	None
+01/20/2017 12:15:24:	p_pair: (1,) | u_pair: (1,) | u_pair != p_pair: False
+01/20/2017 12:15:24:	Location data: Latitude user: 35.339170 Longitude user: 139.490036
+01/20/2017 12:15:24:	Location data: Latitude partner: 35.339170 Longitude partner: 139.490036
+01/20/2017 12:15:24:	127.0.0.1 - - [20/Jan/2017 12:15:24] "POST /Find_User_form HTTP/1.1" 200 -
+01/20/2017 12:15:24:	4d6b07180ed84d5390e925cd6c0c7d8a: Sending packet OPEN data {'pingInterval': 25000, 'pingTimeout': 60000, 'upgrades': [], 'sid': '4d6b07180ed84d5390e925cd6c0c7d8a'}
+01/20/2017 12:15:24:	4d6b07180ed84d5390e925cd6c0c7d8a: Sending packet MESSAGE data 0
+01/20/2017 12:15:24:	127.0.0.1 - - [20/Jan/2017 12:15:24] "GET /socket.io/?EIO=3&transport=polling&t=1484882124260-0 HTTP/1.1" 200 -
+01/20/2017 12:15:24:	4d6b07180ed84d5390e925cd6c0c7d8a: Received packet MESSAGE data 2["msg",{"data":"b"}]
+01/20/2017 12:15:24:	received event "msg" from 4d6b07180ed84d5390e925cd6c0c7d8a [/]
+01/20/2017 12:15:24:	Client connected: b
+01/20/2017 12:15:24:	users
+01/20/2017 12:15:24:	(1, u'b', 139.490036, 35.3391703, 1, None, u'4d6b07180ed84d5390e925cd6c0c7d8a')
+01/20/2017 12:15:24:	(2, u'a', 139.490036, 35.3391703, 1, None, u'0ccb24b50dba4d2e9fcf8b1ecc4ba128')
+01/20/2017 12:15:24:	None
+01/20/2017 12:15:24:	127.0.0.1 - - [20/Jan/2017 12:15:24] "POST /socket.io/?EIO=3&transport=polling&t=1484882124307-1&sid=4d6b07180ed84d5390e925cd6c0c7d8a HTTP/1.1" 200 -
+01/20/2017 12:15:26:	users
+01/20/2017 12:15:26:	(1, u'b', 139.490036, 35.3391703, 1, None, u'4d6b07180ed84d5390e925cd6c0c7d8a')
+01/20/2017 12:15:26:	(2, u'a', 139.490036, 35.3391703, 1, None, u'0ccb24b50dba4d2e9fcf8b1ecc4ba128')
+01/20/2017 12:15:26:	None
+01/20/2017 12:15:26:	User: (u'a',) and time None
+01/20/2017 12:15:26:	User: (u'b',) and time None
+01/20/2017 12:15:30:	users
+01/20/2017 12:15:30:	(1, u'b', 139.490036, 35.3391703, 1, None, u'4d6b07180ed84d5390e925cd6c0c7d8a')
+01/20/2017 12:15:30:	(2, u'a', 139.490036, 35.3391703, 1, None, u'0ccb24b50dba4d2e9fcf8b1ecc4ba128')
+01/20/2017 12:15:30:	None
+01/20/2017 12:15:30:	User: (u'a',) and time None
+01/20/2017 12:15:30:	User: (u'b',) and time None
+01/20/2017 12:15:33:	127.0.0.1 - - [20/Jan/2017 12:15:33] "POST /meet HTTP/1.1" 200 -
+01/20/2017 12:15:34:	Find midpoint: Lat1: 35.339170 Lat2: 35.339170  Lon1: 139.490036 Lon2: 139.490036
+01/20/2017 12:15:34:	Midpoint: Mean latitude: 35.339170 Mean longitude: 139.490036
+01/20/2017 12:15:34:	127.0.0.1 - - [20/Jan/2017 12:15:34] "POST /loc HTTP/1.1" 200 -
+01/20/2017 12:15:34:	443c65799e6d4297a1bd9a139f3658a0: Sending packet OPEN data {'pingInterval': 25000, 'pingTimeout': 60000, 'upgrades': [], 'sid': '443c65799e6d4297a1bd9a139f3658a0'}
+01/20/2017 12:15:34:	443c65799e6d4297a1bd9a139f3658a0: Sending packet MESSAGE data 0
+01/20/2017 12:15:34:	127.0.0.1 - - [20/Jan/2017 12:15:34] "GET /socket.io/?EIO=3&transport=polling&t=1484882134643-0 HTTP/1.1" 200 -
+01/20/2017 12:15:34:	443c65799e6d4297a1bd9a139f3658a0: Received packet MESSAGE data 2["msg",{"data":"a"}]
+01/20/2017 12:15:34:	received event "msg" from 443c65799e6d4297a1bd9a139f3658a0 [/]
+01/20/2017 12:15:34:	Client connected: a
+01/20/2017 12:15:34:	users
+01/20/2017 12:15:34:	(1, u'b', 139.490036, 35.3391703, 1, None, u'4d6b07180ed84d5390e925cd6c0c7d8a')
+01/20/2017 12:15:34:	(2, u'a', 139.490036, 35.3391703, 1, None, u'443c65799e6d4297a1bd9a139f3658a0')
+01/20/2017 12:15:34:	None
+01/20/2017 12:15:34:	127.0.0.1 - - [20/Jan/2017 12:15:34] "POST /socket.io/?EIO=3&transport=polling&t=1484882134771-1&sid=443c65799e6d4297a1bd9a139f3658a0 HTTP/1.1" 200 -
+01/20/2017 12:15:34:	users
+01/20/2017 12:15:34:	(1, u'b', 139.490036, 35.3391703, 1, None, u'4d6b07180ed84d5390e925cd6c0c7d8a')
+01/20/2017 12:15:34:	(2, u'a', 139.490036, 35.3391703, 1, None, u'443c65799e6d4297a1bd9a139f3658a0')
+01/20/2017 12:15:34:	None
+01/20/2017 12:15:34:	User: (u'a',) and time None
+01/20/2017 12:15:34:	User: (u'b',) and time None
+01/20/2017 12:15:38:	users
+01/20/2017 12:15:38:	(1, u'b', 139.490036, 35.3391703, 1, None, u'4d6b07180ed84d5390e925cd6c0c7d8a')
+01/20/2017 12:15:38:	(2, u'a', 139.490036, 35.3391703, 1, None, u'443c65799e6d4297a1bd9a139f3658a0')
+01/20/2017 12:15:38:	None
+01/20/2017 12:15:38:	User: (u'a',) and time None
+01/20/2017 12:15:38:	User: (u'b',) and time None
+01/20/2017 12:15:42:	users
+01/20/2017 12:15:42:	(1, u'b', 139.490036, 35.3391703, 1, None, u'4d6b07180ed84d5390e925cd6c0c7d8a')
+01/20/2017 12:15:42:	(2, u'a', 139.490036, 35.3391703, 1, None, u'443c65799e6d4297a1bd9a139f3658a0')
+01/20/2017 12:15:42:	None
+01/20/2017 12:15:42:	User: (u'a',) and time None
+01/20/2017 12:15:42:	User: (u'b',) and time None
+01/20/2017 12:15:44:	127.0.0.1 - - [20/Jan/2017 12:15:44] "POST /meet HTTP/1.1" 200 -
+01/20/2017 12:15:44:	Find midpoint: Lat1: 35.339170 Lat2: 35.339170  Lon1: 139.490036 Lon2: 139.490036
+01/20/2017 12:15:44:	Midpoint: Mean latitude: 35.339170 Mean longitude: 139.490036
+01/20/2017 12:15:44:	127.0.0.1 - - [20/Jan/2017 12:15:44] "POST /loc HTTP/1.1" 200 -
+01/20/2017 12:15:44:	6099df08ce034d98846430e65f4bdbde: Sending packet OPEN data {'pingInterval': 25000, 'pingTimeout': 60000, 'upgrades': [], 'sid': '6099df08ce034d98846430e65f4bdbde'}
+01/20/2017 12:15:44:	6099df08ce034d98846430e65f4bdbde: Sending packet MESSAGE data 0
+01/20/2017 12:15:44:	127.0.0.1 - - [20/Jan/2017 12:15:44] "GET /socket.io/?EIO=3&transport=polling&t=1484882144678-0 HTTP/1.1" 200 -
+01/20/2017 12:15:44:	6099df08ce034d98846430e65f4bdbde: Received packet MESSAGE data 2["msg",{"data":"b"}]
+01/20/2017 12:15:44:	received event "msg" from 6099df08ce034d98846430e65f4bdbde [/]
+01/20/2017 12:15:44:	Client connected: b
+01/20/2017 12:15:44:	users
+01/20/2017 12:15:44:	(1, u'b', 139.490036, 35.3391703, 1, None, u'6099df08ce034d98846430e65f4bdbde')
+01/20/2017 12:15:44:	(2, u'a', 139.490036, 35.3391703, 1, None, u'443c65799e6d4297a1bd9a139f3658a0')
+01/20/2017 12:15:44:	None
+01/20/2017 12:15:44:	127.0.0.1 - - [20/Jan/2017 12:15:44] "POST /socket.io/?EIO=3&transport=polling&t=1484882144724-1&sid=6099df08ce034d98846430e65f4bdbde HTTP/1.1" 200 -
+01/20/2017 12:15:46:	users
+01/20/2017 12:15:46:	(1, u'b', 139.490036, 35.3391703, 1, None, u'6099df08ce034d98846430e65f4bdbde')
+01/20/2017 12:15:46:	(2, u'a', 139.490036, 35.3391703, 1, None, u'443c65799e6d4297a1bd9a139f3658a0')
+01/20/2017 12:15:46:	None
+01/20/2017 12:15:46:	User: (u'a',) and time None
+01/20/2017 12:15:46:	User: (u'b',) and time None
+01/20/2017 12:15:50:	users
+01/20/2017 12:15:50:	(1, u'b', 139.490036, 35.3391703, 1, None, u'6099df08ce034d98846430e65f4bdbde')
+01/20/2017 12:15:50:	(2, u'a', 139.490036, 35.3391703, 1, None, u'443c65799e6d4297a1bd9a139f3658a0')
+01/20/2017 12:15:50:	None
+01/20/2017 12:15:50:	User: (u'a',) and time None
+01/20/2017 12:15:50:	User: (u'b',) and time None
+01/20/2017 12:15:54:	users
+01/20/2017 12:15:54:	(1, u'b', 139.490036, 35.3391703, 1, None, u'6099df08ce034d98846430e65f4bdbde')
+01/20/2017 12:15:54:	(2, u'a', 139.490036, 35.3391703, 1, None, u'443c65799e6d4297a1bd9a139f3658a0')
+01/20/2017 12:15:54:	None
+01/20/2017 12:15:54:	User: (u'a',) and time None
+01/20/2017 12:15:54:	User: (u'b',) and time None
+01/20/2017 12:15:54:	127.0.0.1 - - [20/Jan/2017 12:15:54] "POST /meet HTTP/1.1" 200 -
+01/20/2017 12:15:55:	Find midpoint: Lat1: 35.339170 Lat2: 35.339170  Lon1: 139.490036 Lon2: 139.490036
+01/20/2017 12:15:55:	Midpoint: Mean latitude: 35.339170 Mean longitude: 139.490036
+01/20/2017 12:15:55:	127.0.0.1 - - [20/Jan/2017 12:15:55] "POST /loc HTTP/1.1" 200 -
+01/20/2017 12:15:55:	35f1d48d7cc0454682134ad849f18724: Sending packet OPEN data {'pingInterval': 25000, 'pingTimeout': 60000, 'upgrades': [], 'sid': '35f1d48d7cc0454682134ad849f18724'}
+01/20/2017 12:15:55:	35f1d48d7cc0454682134ad849f18724: Sending packet MESSAGE data 0
+01/20/2017 12:15:55:	127.0.0.1 - - [20/Jan/2017 12:15:55] "GET /socket.io/?EIO=3&transport=polling&t=1484882155511-0 HTTP/1.1" 200 -
+01/20/2017 12:15:55:	35f1d48d7cc0454682134ad849f18724: Received packet MESSAGE data 2["msg",{"data":"a"}]
+01/20/2017 12:15:55:	received event "msg" from 35f1d48d7cc0454682134ad849f18724 [/]
+01/20/2017 12:15:55:	Client connected: a
+01/20/2017 12:15:55:	users
+01/20/2017 12:15:55:	(1, u'b', 139.490036, 35.3391703, 1, None, u'6099df08ce034d98846430e65f4bdbde')
+01/20/2017 12:15:55:	(2, u'a', 139.490036, 35.3391703, 1, None, u'35f1d48d7cc0454682134ad849f18724')
+01/20/2017 12:15:55:	None
+01/20/2017 12:15:55:	127.0.0.1 - - [20/Jan/2017 12:15:55] "POST /socket.io/?EIO=3&transport=polling&t=1484882155574-1&sid=35f1d48d7cc0454682134ad849f18724 HTTP/1.1" 200 -
+01/20/2017 12:15:58:	users
+01/20/2017 12:15:58:	(1, u'b', 139.490036, 35.3391703, 1, None, u'6099df08ce034d98846430e65f4bdbde')
+01/20/2017 12:15:58:	(2, u'a', 139.490036, 35.3391703, 1, None, u'35f1d48d7cc0454682134ad849f18724')
+01/20/2017 12:15:58:	None
+01/20/2017 12:15:58:	User: (u'a',) and time None
+01/20/2017 12:15:58:	User: (u'b',) and time None
+01/20/2017 12:16:02:	users
+01/20/2017 12:16:02:	(1, u'b', 139.490036, 35.3391703, 1, None, u'6099df08ce034d98846430e65f4bdbde')
+01/20/2017 12:16:02:	(2, u'a', 139.490036, 35.3391703, 1, None, u'35f1d48d7cc0454682134ad849f18724')
+01/20/2017 12:16:02:	None
+01/20/2017 12:16:02:	User: (u'a',) and time None
+01/20/2017 12:16:02:	User: (u'b',) and time None
+01/20/2017 12:16:04:	127.0.0.1 - - [20/Jan/2017 12:16:04] "POST /meet HTTP/1.1" 200 -
+01/20/2017 12:16:05:	Find midpoint: Lat1: 35.339170 Lat2: 35.339170  Lon1: 139.490036 Lon2: 139.490036
+01/20/2017 12:16:05:	Midpoint: Mean latitude: 35.339170 Mean longitude: 139.490036
+01/20/2017 12:16:05:	127.0.0.1 - - [20/Jan/2017 12:16:05] "POST /loc HTTP/1.1" 200 -
+01/20/2017 12:16:05:	cdb2e08aca274406932c7bcd7a509bdb: Sending packet OPEN data {'pingInterval': 25000, 'pingTimeout': 60000, 'upgrades': [], 'sid': 'cdb2e08aca274406932c7bcd7a509bdb'}
+01/20/2017 12:16:05:	cdb2e08aca274406932c7bcd7a509bdb: Sending packet MESSAGE data 0
+01/20/2017 12:16:05:	127.0.0.1 - - [20/Jan/2017 12:16:05] "GET /socket.io/?EIO=3&transport=polling&t=1484882165667-0 HTTP/1.1" 200 -
+01/20/2017 12:16:05:	cdb2e08aca274406932c7bcd7a509bdb: Received packet MESSAGE data 2["msg",{"data":"b"}]
+01/20/2017 12:16:05:	received event "msg" from cdb2e08aca274406932c7bcd7a509bdb [/]
+01/20/2017 12:16:05:	Client connected: b
+01/20/2017 12:16:05:	users
+01/20/2017 12:16:05:	(1, u'b', 139.490036, 35.3391703, 1, None, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:16:05:	(2, u'a', 139.490036, 35.3391703, 1, None, u'35f1d48d7cc0454682134ad849f18724')
+01/20/2017 12:16:05:	None
+01/20/2017 12:16:05:	127.0.0.1 - - [20/Jan/2017 12:16:05] "POST /socket.io/?EIO=3&transport=polling&t=1484882165743-1&sid=cdb2e08aca274406932c7bcd7a509bdb HTTP/1.1" 200 -
+01/20/2017 12:16:06:	users
+01/20/2017 12:16:06:	(1, u'b', 139.490036, 35.3391703, 1, None, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:16:06:	(2, u'a', 139.490036, 35.3391703, 1, None, u'35f1d48d7cc0454682134ad849f18724')
+01/20/2017 12:16:06:	None
+01/20/2017 12:16:06:	User: (u'a',) and time None
+01/20/2017 12:16:06:	User: (u'b',) and time None
+01/20/2017 12:16:10:	users
+01/20/2017 12:16:10:	(1, u'b', 139.490036, 35.3391703, 1, None, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:16:10:	(2, u'a', 139.490036, 35.3391703, 1, None, u'35f1d48d7cc0454682134ad849f18724')
+01/20/2017 12:16:10:	None
+01/20/2017 12:16:10:	User: (u'a',) and time None
+01/20/2017 12:16:10:	User: (u'b',) and time None
+01/20/2017 12:16:14:	Client disconnected: 0ccb24b50dba4d2e9fcf8b1ecc4ba128
+01/20/2017 12:16:14:	users
+01/20/2017 12:16:14:	(1, u'b', 139.490036, 35.3391703, 1, None, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:16:14:	(2, u'a', 139.490036, 35.3391703, 1, None, u'35f1d48d7cc0454682134ad849f18724')
+01/20/2017 12:16:14:	None
+01/20/2017 12:16:14:	emitting event "forceDisconnect" to 0ccb24b50dba4d2e9fcf8b1ecc4ba128 [/]
+01/20/2017 12:16:14:	0ccb24b50dba4d2e9fcf8b1ecc4ba128: Client is gone, closing socket
+01/20/2017 12:16:14:	0ccb24b50dba4d2e9fcf8b1ecc4ba128: Client is gone, closing socket
+01/20/2017 12:16:14:	127.0.0.1 - - [20/Jan/2017 12:16:14] "GET /socket.io/?EIO=3&transport=polling&t=1484882114078-2&sid=0ccb24b50dba4d2e9fcf8b1ecc4ba128 HTTP/1.1" 400 -
+01/20/2017 12:16:14:	users
+01/20/2017 12:16:14:	(1, u'b', 139.490036, 35.3391703, 1, None, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:16:14:	(2, u'a', 139.490036, 35.3391703, 1, None, u'35f1d48d7cc0454682134ad849f18724')
+01/20/2017 12:16:14:	None
+01/20/2017 12:16:14:	User: (u'a',) and time None
+01/20/2017 12:16:14:	User: (u'b',) and time None
+01/20/2017 12:16:15:	127.0.0.1 - - [20/Jan/2017 12:16:15] "POST /meet HTTP/1.1" 200 -
+01/20/2017 12:16:15:	Find midpoint: Lat1: 35.339170 Lat2: 35.339170  Lon1: 139.490036 Lon2: 139.490036
+01/20/2017 12:16:15:	Midpoint: Mean latitude: 35.339170 Mean longitude: 139.490036
+01/20/2017 12:16:15:	127.0.0.1 - - [20/Jan/2017 12:16:15] "POST /loc HTTP/1.1" 200 -
+01/20/2017 12:16:15:	ab1195710e1d45d8bf757a5459e82c45: Sending packet OPEN data {'pingInterval': 25000, 'pingTimeout': 60000, 'upgrades': [], 'sid': 'ab1195710e1d45d8bf757a5459e82c45'}
+01/20/2017 12:16:15:	ab1195710e1d45d8bf757a5459e82c45: Sending packet MESSAGE data 0
+01/20/2017 12:16:15:	127.0.0.1 - - [20/Jan/2017 12:16:15] "GET /socket.io/?EIO=3&transport=polling&t=1484882175995-0 HTTP/1.1" 200 -
+01/20/2017 12:16:16:	ab1195710e1d45d8bf757a5459e82c45: Received packet MESSAGE data 2["msg",{"data":"a"}]
+01/20/2017 12:16:16:	received event "msg" from ab1195710e1d45d8bf757a5459e82c45 [/]
+01/20/2017 12:16:16:	Client connected: a
+01/20/2017 12:16:16:	users
+01/20/2017 12:16:16:	(1, u'b', 139.490036, 35.3391703, 1, None, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:16:16:	(2, u'a', 139.490036, 35.3391703, 1, None, u'ab1195710e1d45d8bf757a5459e82c45')
+01/20/2017 12:16:16:	None
+01/20/2017 12:16:16:	127.0.0.1 - - [20/Jan/2017 12:16:16] "POST /socket.io/?EIO=3&transport=polling&t=1484882176035-1&sid=ab1195710e1d45d8bf757a5459e82c45 HTTP/1.1" 200 -
+01/20/2017 12:16:18:	users
+01/20/2017 12:16:18:	(1, u'b', 139.490036, 35.3391703, 1, None, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:16:18:	(2, u'a', 139.490036, 35.3391703, 1, None, u'ab1195710e1d45d8bf757a5459e82c45')
+01/20/2017 12:16:18:	None
+01/20/2017 12:16:18:	User: (u'a',) and time None
+01/20/2017 12:16:18:	User: (u'b',) and time None
+01/20/2017 12:16:24:	Client disconnected: 4d6b07180ed84d5390e925cd6c0c7d8a
+01/20/2017 12:16:24:	users
+01/20/2017 12:16:24:	(1, u'b', 139.490036, 35.3391703, 1, None, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:16:24:	(2, u'a', 139.490036, 35.3391703, 1, None, u'ab1195710e1d45d8bf757a5459e82c45')
+01/20/2017 12:16:24:	None
+01/20/2017 12:16:24:	emitting event "forceDisconnect" to 4d6b07180ed84d5390e925cd6c0c7d8a [/]
+01/20/2017 12:16:24:	4d6b07180ed84d5390e925cd6c0c7d8a: Client is gone, closing socket
+01/20/2017 12:16:24:	4d6b07180ed84d5390e925cd6c0c7d8a: Client is gone, closing socket
+01/20/2017 12:16:24:	127.0.0.1 - - [20/Jan/2017 12:16:24] "GET /socket.io/?EIO=3&transport=polling&t=1484882124315-2&sid=4d6b07180ed84d5390e925cd6c0c7d8a HTTP/1.1" 400 -
+01/20/2017 12:16:34:	Client disconnected: 443c65799e6d4297a1bd9a139f3658a0
+01/20/2017 12:16:34:	users
+01/20/2017 12:16:34:	(1, u'b', 139.490036, 35.3391703, 1, None, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:16:34:	(2, u'a', 139.490036, 35.3391703, 1, None, u'ab1195710e1d45d8bf757a5459e82c45')
+01/20/2017 12:16:34:	None
+01/20/2017 12:16:34:	emitting event "forceDisconnect" to 443c65799e6d4297a1bd9a139f3658a0 [/]
+01/20/2017 12:16:34:	443c65799e6d4297a1bd9a139f3658a0: Client is gone, closing socket
+01/20/2017 12:16:34:	443c65799e6d4297a1bd9a139f3658a0: Client is gone, closing socket
+01/20/2017 12:16:34:	127.0.0.1 - - [20/Jan/2017 12:16:34] "GET /socket.io/?EIO=3&transport=polling&t=1484882134794-2&sid=443c65799e6d4297a1bd9a139f3658a0 HTTP/1.1" 400 -
+01/20/2017 12:16:44:	Client disconnected: 6099df08ce034d98846430e65f4bdbde
+01/20/2017 12:16:44:	users
+01/20/2017 12:16:44:	(1, u'b', 139.490036, 35.3391703, 1, None, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:16:44:	(2, u'a', 139.490036, 35.3391703, 1, None, u'ab1195710e1d45d8bf757a5459e82c45')
+01/20/2017 12:16:44:	None
+01/20/2017 12:16:44:	emitting event "forceDisconnect" to 6099df08ce034d98846430e65f4bdbde [/]
+01/20/2017 12:16:44:	6099df08ce034d98846430e65f4bdbde: Client is gone, closing socket
+01/20/2017 12:16:44:	6099df08ce034d98846430e65f4bdbde: Client is gone, closing socket
+01/20/2017 12:16:44:	127.0.0.1 - - [20/Jan/2017 12:16:44] "GET /socket.io/?EIO=3&transport=polling&t=1484882144729-2&sid=6099df08ce034d98846430e65f4bdbde HTTP/1.1" 400 -
+01/20/2017 12:16:55:	Client disconnected: 35f1d48d7cc0454682134ad849f18724
+01/20/2017 12:16:55:	users
+01/20/2017 12:16:55:	(1, u'b', 139.490036, 35.3391703, 1, None, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:16:55:	(2, u'a', 139.490036, 35.3391703, 1, None, u'ab1195710e1d45d8bf757a5459e82c45')
+01/20/2017 12:16:55:	None
+01/20/2017 12:16:55:	emitting event "forceDisconnect" to 35f1d48d7cc0454682134ad849f18724 [/]
+01/20/2017 12:16:55:	35f1d48d7cc0454682134ad849f18724: Client is gone, closing socket
+01/20/2017 12:16:55:	35f1d48d7cc0454682134ad849f18724: Client is gone, closing socket
+01/20/2017 12:16:55:	127.0.0.1 - - [20/Jan/2017 12:16:55] "GET /socket.io/?EIO=3&transport=polling&t=1484882155576-2&sid=35f1d48d7cc0454682134ad849f18724 HTTP/1.1" 400 -
+01/20/2017 12:17:05:	Client disconnected: cdb2e08aca274406932c7bcd7a509bdb
+01/20/2017 12:17:05:	users
+01/20/2017 12:17:05:	(1, u'b', 139.490036, 35.3391703, 1, 1484882225.803983, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:17:05:	(2, u'a', 139.490036, 35.3391703, 1, None, u'ab1195710e1d45d8bf757a5459e82c45')
+01/20/2017 12:17:05:	None
+01/20/2017 12:17:05:	emitting event "forceDisconnect" to cdb2e08aca274406932c7bcd7a509bdb [/]
+01/20/2017 12:17:05:	cdb2e08aca274406932c7bcd7a509bdb: Client is gone, closing socket
+01/20/2017 12:17:05:	cdb2e08aca274406932c7bcd7a509bdb: Client is gone, closing socket
+01/20/2017 12:17:05:	127.0.0.1 - - [20/Jan/2017 12:17:05] "GET /socket.io/?EIO=3&transport=polling&t=1484882165746-2&sid=cdb2e08aca274406932c7bcd7a509bdb HTTP/1.1" 400 -
+01/20/2017 12:17:16:	Client disconnected: ab1195710e1d45d8bf757a5459e82c45
+01/20/2017 12:17:16:	users
+01/20/2017 12:17:16:	(1, u'b', 139.490036, 35.3391703, 1, 1484882225.803983, u'cdb2e08aca274406932c7bcd7a509bdb')
+01/20/2017 12:17:16:	(2, u'a', 139.490036, 35.3391703, 1, 1484882236.069034, u'ab1195710e1d45d8bf757a5459e82c45')
+01/20/2017 12:17:16:	None
+01/20/2017 12:17:16:	emitting event "forceDisconnect" to ab1195710e1d45d8bf757a5459e82c45 [/]
+01/20/2017 12:17:16:	ab1195710e1d45d8bf757a5459e82c45: Client is gone, closing socket
+01/20/2017 12:17:16:	ab1195710e1d45d8bf757a5459e82c45: Client is gone, closing socket
+01/20/2017 12:17:16:	127.0.0.1 - - [20/Jan/2017 12:17:16] "GET /socket.io/?EIO=3&transport=polling&t=1484882176040-2&sid=ab1195710e1d45d8bf757a5459e82c45 HTTP/1.1" 400 -

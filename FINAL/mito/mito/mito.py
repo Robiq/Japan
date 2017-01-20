@@ -2,32 +2,22 @@ import os
 import sys
 import time
 import signal
-import logging
 from flask import *
 import sqlite3 as sql
 from threading import Thread
 from flask_socketio import SocketIO, disconnect
-#import from local file
+
 from my_database import *
-#Debugging output is sent to debugLog.txt
-logging.basicConfig(stream=sys.stderr,
-					filename='mito/debugLog.txt',
-					level=logging.DEBUG,
-					format='%(asctime)-8s:	%(message)s',
-					datefmt='%m/%d/%Y %H:%M:%S',
-					filemode='w+')
-#debugging: set manually to true for debug printout in console
-#DEV = False
 
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
-async_mode = None
+async_mode = "threading"
 
 #Initiate app
 app = Flask(__name__)
-app.config.from_object(__name__) # load config from this file , mito.py
 socketio = SocketIO(app, async_mode=async_mode)	#load socketio
+app.config.from_object(__name__) # load config from this file , mito.py
 
 # Load default config and override config from an environment variable
 app.config.update(dict(
@@ -88,7 +78,8 @@ def close_db(error):
 #When a socket connects
 @socketio.on('connect')
 def connect():
-    logging.info("new connection: " + request.sid)
+	pass
+#    print("new connection: " + request.sid)
 
 #Recieve message from socket
 #user['data'] = always current user
@@ -96,17 +87,17 @@ def connect():
 @socketio.on('msg')
 def msg(user):
 #	DEV
-	logging.info("Client connected: " + user['data'])
+#	print(user['data'])
 	setSID(user['data'], request.sid, get_db())
-	logging.info(printDB("users", get_db().cursor()))
+#	printDB("users", get_db().cursor())
 
 #When a socket disconnects
 @socketio.on('disconnect')
 def disconnect():
 	setTimeDc(request.sid, time.time(), get_db())
 #	DEV
-	logging.info("Client disconnected: " + request.sid)
-	logging.info(printDB("users", get_db().cursor()))
+#	printDB("users", get_db().cursor())
+#	print('Client disconnected: ' + request.sid)
 
 #----------------------------------------------------
 def timeout():
@@ -126,19 +117,17 @@ def timeout():
 			#find time and get cursor
 			timeNow = time.time()
 			con = get_db().cursor()
-
-#			DEV
-			logging.info(printDB("users", get_db().cursor()))
-
+#			dev
+#			printDB("users", get_db().cursor())
 			usList = con.execute("SELECT name FROM users").fetchall()
 			#for-loop over all users
 			for user in usList:
 				#get time for user
 				timeDc = getTimeDc(user, con)
-
-#				DEV
-				logging.info("User: %s and time %s", user, timeDc[0])
-
+#				dev
+#				print("User and time")
+#				print(user)
+#				print(timeDc[0])
 				#if user has a time set
 				if timeDc[0]:
 					if type(timeDc) is tuple:
@@ -181,8 +170,7 @@ def isPair(user, partner):
 
 	"""
 #	DEV
-	logging.info("User currently in isPair: %s", user)
-	logging.info(printDB("users", get_db().cursor()))
+#	printDB("users", get_db().cursor())
 
 	#Check for partner in database
 	partner = getUser(partner, get_db().cursor())
@@ -193,8 +181,9 @@ def isPair(user, partner):
 		u_pair=getPair(user, get_db().cursor())
 		p_pair=getPair(partner, get_db().cursor())
 		
-#		DEV
-		logging.info("p_pair: %s | u_pair: %s | u_pair != p_pair: %r", u_pair, p_pair, u_pair != p_pair)
+#		Dev
+#		print("Pairs")
+#		print(p_pair, u_pair, u_pair != p_pair)
 
 		#Paired with someone else!
 		if u_pair != p_pair:
@@ -208,9 +197,9 @@ def isPair(user, partner):
 				insertPair(user, partner, get_db())
 				updateUsers(user, partner, get_db())
 #				DEV
-				logging.info("Inserted into database: user = %s and partner = %s", user, partner)
-				logging.info(printDB("users", get_db().cursor()))
-				logging.info(printDB("pairs", get_db().cursor()))
+#				print("INSERTED")
+#				printDB("users", get_db().cursor())
+#				printDB("pairs", get_db().cursor())
 
 			#return 1
 			return 1
@@ -341,10 +330,10 @@ def Find_User_form(error=None):
 		#get midpoint
 		midLon, midLat = getMidLoc(user, get_db())
 
-#		DEV
-		logging.info("Location data: Latitude user: %f Longitude user: %f", locLat1, locLon1)
-		logging.info("Location data: Latitude partner: %f Longitude partner: %f", locLat2, locLon2)
-		
+#		Dev
+#		print(locLat1, locLon1, locLat2, locLon2)
+#		print("Users")
+#		print(user, partner)
 		#if all location data is present
 		if (locLat1 and locLon1 and locLat2 and locLon2):
 			#return

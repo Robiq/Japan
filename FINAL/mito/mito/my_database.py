@@ -1,5 +1,3 @@
-import logging
-
 def findMidpoint(user, partner, con):
 	"""
 	Finds the middlepoint between two users
@@ -22,12 +20,10 @@ def findMidpoint(user, partner, con):
 	#find loc partner
 	pLat, pLon = getLocUser(partner, con)
 #	DEV
-	logging.info("Find midpoint: Lat1: %f Lat2: %f  Lon1: %f Lon2: %f", uLat, pLat, uLon, pLon)
+#	print(uLat, uLon, pLat, pLon)
 	#calculate mean values
 	meanLat = ((uLat + pLat) / 2)
 	meanLon = ((uLon + pLon) / 2)
-	#DEV
-	logging.info("Midpoint: Mean latitude: %f Mean longitude: %f", meanLat, meanLon)
 	#return mean
 	return meanLon, meanLat
 
@@ -50,7 +46,9 @@ def insertPair(user, partner, db):
 	con.execute("INSERT INTO pairs (name1, name2, mpLon, mpLat) VALUES (?, ?, ?, ?)", (user,partner, midLon, midLat) )
 	db.commit()
 #	DEV	
-	logging.info(printDB("pairs", con))
+#	con.execute("SELECT * from pairs")
+#	for x in con:
+#		print(x)
 
 def insertUser(user, lon, lat, db):
 	"""
@@ -88,7 +86,7 @@ def deleteUser(user, db):
 	con.execute("DELETE FROM users WHERE name=?", (user,))
 	db.commit()
 #	DEV
-	logging.info("Deleted " + user)
+#	print("Deleted " + user)
 
 def updateMidpoint(user, partner, db):
 	"""
@@ -151,7 +149,8 @@ def updateUsers(user, partner, db):
 	con = db.cursor()
 	num = getPairId(user, con)[0]
 #	DEV
-	logging.info("pairID: %d", num)
+#	print("PairID")
+#	print(num)
 	con.execute("UPDATE users SET pair=? WHERE name=?", (num,user))
 	con.execute("UPDATE users SET pair=? WHERE name=?", (num,partner))
 	db.commit()
@@ -252,6 +251,7 @@ def getUser(user, con):
 	"""
 	return con.execute("SELECT name FROM users WHERE name=?", (user,)).fetchone()
 
+#TODO handle session
 def getTimeDc(user, con):
 	"""
 	Get disconnect time for user
@@ -304,12 +304,13 @@ def setTimeDc(sid, time, db):
 
 #DEV
 #Prints the whole database named 'name'
-def printDB(name, con):
-	query = "SELECT * FROM " + name
-	a = con.execute(query)
-	logging.info(name)
-	for x in a:
-		logging.info(x)	
+#def printDB(name, con):
+#	query = "SELECT * FROM " + name
+#	a = con.execute(query)
+#	print(name)
+#	for x in a:
+#		print(x)
+	
 	
 def removeDBEntries(user, db):
 	"""
@@ -337,6 +338,6 @@ def removeDBEntries(user, db):
 		con.execute("DELETE FROM pairs WHERE id=?", (pairNum,))
 		db.commit()
 #		DEV
-		logging.info(printDB("users", con))
-	else:
-		logging.error("WTFFF")
+#		printDB("users", con)
+#	else:
+#		print("WTFFF")

@@ -1,0 +1,3 @@
+graft mito/templates
+graft mito/static
+include mito/schema.sql
